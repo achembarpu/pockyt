@@ -22,14 +22,12 @@ Using simple command sequences, routine tasks can be automated and reusable scri
 Quick Start
 -----------
 
-Setup:::
+``pockyt`` supports Python ``2.7.x`` and ``3.4.x``
 
-    $ pip install pockyt
-    $ pockyt reg
-
-Follow the prompts to connect your pocket account to pockyt.
-
-Refer the Documentation and Examples for usage info and ideas.
+1. ``$ pip install pockyt --upgrade``
+2. ``$ pockyt reg``
+3. Follow the prompts to connect your pocket account to pockyt.
+4. Refer the Documentation and Examples for usage info and ideas.
 
 Examples
 --------
@@ -131,7 +129,7 @@ Contribute
 
 Feel free to contribute features, bugfixes, improvements, and usage ideas.
 
-Fork `pockyt <https://github.com/arvindch/pockyt/fork>`_.
+`Fork <https://github.com/arvindch/pockyt/fork>`_ pockyt.
 Work on the source code.
 ::
     git clone git@github.com:<username>/pockyt.git

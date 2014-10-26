@@ -1,6 +1,4 @@
-"""
-Simplified Wrappers
-"""
+from __future__ import print_function, unicode_literals
 
 import os
 import sys
@@ -41,7 +39,8 @@ class Network(object):
                 req.api_json = req.json(object_pairs_hook=OrderedDict)
             except ValueError:
                 req.api_json = {}
-            return req
+            finally:
+                return req
 
 
 class Browser(object):

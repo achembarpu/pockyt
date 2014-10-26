@@ -1,7 +1,16 @@
+from __future__ import absolute_import, print_function
+
+import sys
 from setuptools import setup
 
+python_v = sys.version_info[0:2]
+
+if python_v != (2, 7) and python_v != (3, 4):
+    print('This version of Python is unsupported !\nPlease use Python 2.7.x or 3.4.x !')
+    sys.exit(1)
+
 name = 'pockyt'
-version = '0.2'
+version = '0.3'
 
 setup(
     name=name,
@@ -27,6 +36,7 @@ setup(
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Natural Language :: English',
         'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
     ],
     entry_points={
