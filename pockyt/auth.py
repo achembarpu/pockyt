@@ -1,17 +1,30 @@
-"""
-Pocket API Access Authenticator
-"""
+from __future__ import absolute_import, print_function, unicode_literals
 
-import configparser
+try:
+    input = raw_input
+except NameError:
+    pass
+
+try:
+    import ConfigParser as configparser
+except ImportError:
+    import configparser
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+
 import os
 import sys
-import urllib.parse
 
 from .api import API
 from .wrapper import Network
 
 
 class Authenticator(object):
+    """
+    Pocket API Access Authenticator
+    """
 
     def __init__(self, args):
         self._args = args
@@ -52,7 +65,7 @@ class Authenticator(object):
             'redirect_uri': API.REDIRECT_URL,
         }
         req = Network.post_request(API.REQUEST_TOKEN_URL, payload)
-        info = urllib.parse.parse_qs(req.text)
+        info = urlparse.parse_qs(req.text)
 
         self._request_token = info['code'][0]
 
@@ -62,7 +75,7 @@ class Authenticator(object):
             'code': self._request_token,
         }
         req = Network.post_request(API.ACCESS_TOKEN_URL, payload)
-        info = urllib.parse.parse_qs(req.text)
+        info = urlparse.parse_qs(req.text)
 
         self._access_token = info['access_token'][0]
         self._username = info['username'][0]
@@ -91,13 +104,16 @@ class Authenticator(object):
         self._load_config()
         try:
             credentials = self._config['CREDENTIALS']
-        except KeyError:
-            print('Connect an account first!')
-            sys.exit(1)
-        else:
             self._consumer_key = credentials['consumer_key']
             self._access_token = credentials['access_token']
             self._username = credentials['username']
+        except AttributeError:
+            self._consumer_key = self._config.get('CREDENTIALS', 'consumer_key')
+            self._access_token = self._config.get('CREDENTIALS', 'access_token')
+            self._username = self._config.get('CREDENTIALS', 'username')
+        except KeyError:
+            print('Connect an account first!')
+            sys.exit(1)
 
     def run(self):
         if self._args.do == 'reg':
