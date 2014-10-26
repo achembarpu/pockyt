@@ -1,6 +1,4 @@
-"""
-pockyt - Pocket Commandline Client
-"""
+from __future__ import absolute_import, unicode_literals
 
 import argparse
 import sys
@@ -11,6 +9,9 @@ from .client import Client
 
 
 class Pockyt(object):
+    """
+    pockyt - Pocket Commandline Client
+    """
 
     def __init__(self):
         self._setup_parsers()

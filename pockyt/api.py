@@ -1,9 +1,10 @@
-"""
-Pocket API Access Data
-"""
+from __future__ import unicode_literals
 
 
 class API(object):
+    """
+    Pocket API Access Data
+    """
 
     APP_NAME = 'pockyt'
 
