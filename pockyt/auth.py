@@ -100,7 +100,7 @@ class Authenticator(object):
             self._username = credentials['username']
 
     def run(self):
-        if self._args.do == 'register':
+        if self._args.do == 'reg':
             self._setup()
             sys.exit(0)
         else:

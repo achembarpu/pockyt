@@ -37,8 +37,10 @@ class Network(object):
             ))
             sys.exit(1)
         else:
-            # preserve json response ordering, as per API
-            req.api_json = req.json(object_pairs_hook=OrderedDict) or {}
+            try:  # preserve json response ordering, as per API
+                req.api_json = req.json(object_pairs_hook=OrderedDict)
+            except ValueError:
+                req.api_json = {}
             return req
 
 
