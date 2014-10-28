@@ -91,7 +91,7 @@ class Authenticator(object):
 
         input('Connect an account, via this link :\n` {0} `\n'
               'Press Enter to when done...'
-              .format(API.AUTHORIZE_USER_URL(self._request_token)))
+              .format(API.get_auth_user_url(self._request_token)))
 
         self._obtain_access_token()
 

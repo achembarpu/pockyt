@@ -17,11 +17,12 @@ class API(object):
 
     REQUEST_TOKEN_URL = API_URL + 'oauth/request'
 
-    AUTHORIZE_USER_URL = lambda rt: \
-        API.POCKET_URL + 'auth/authorize?request_token={0}' \
-                         '&redirect_uri={1}'.format(rt, API.REDIRECT_URL)
-
     ACCESS_TOKEN_URL = API_URL + 'oauth/authorize'
 
     RETRIEVE_URL = API_URL + 'get'
     MODIFY_URL = API_URL + 'send'
+
+    @classmethod
+    def get_auth_user_url(cls, rt):
+        return cls.POCKET_URL + 'auth/authorize?request_token={0}' \
+                                '&redirect_uri={1}'.format(rt, cls.REDIRECT_URL)
