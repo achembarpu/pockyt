@@ -49,8 +49,12 @@ class Authenticator(object):
 
     def _save_config(self):
         self._config = configparser.ConfigParser()
-
-        self._config['CREDENTIALS'] = self.credentials
+        try:
+            self._config['CREDENTIALS'] = self.credentials
+        except AttributeError:
+            self._config.add_section('CREDENTIALS')
+            for (k, v) in self.credentials.items():
+                self._config.set('CREDENTIALS',  k, v)
 
         with open(self._config_path, 'w+') as cf:
             self._config.write(cf)
