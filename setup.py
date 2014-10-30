@@ -3,14 +3,16 @@ from __future__ import absolute_import, print_function
 import sys
 from setuptools import setup
 
-python_v = sys.version_info[0:2]
 
-if python_v != (2, 7) and python_v != (3, 4):
-    print('This version of Python is unsupported !\nPlease use Python 2.7.x or 3.4.x !')
+if sys.version_info[0:2] not in [(2, 7), (3, 4)]:
+    print('This version of Python is unsupported !\n'
+          'Please use Python 2.7.x or 3.4.x !')
     sys.exit(1)
 
+
 name = 'pockyt'
-version = '0.5'
+version = '0.6'
+
 
 setup(
     name=name,

@@ -1,6 +1,7 @@
 from __future__ import print_function, unicode_literals
 
 import os
+import pip
 import sys
 import traceback
 import webbrowser
@@ -20,9 +21,18 @@ def print_bug_report():
     pretty_print = lambda s:\
         print(separator + '\n{0}\n'.format(s) + separator)
 
+    python_version = str(sys.version_info[:3])
+    arguments = str(sys.argv[1:])
+    packages = str([
+        (package.key, package.version)
+        for package in pip.get_installed_distributions()
+    ])
+
     pretty_print('Bug Report :')
-    print('ARGV :\t' + str(sys.argv[1:]))
-    pretty_print('TRACEBACK :')
+    print('Python Version : ' + python_version)
+    print('Installed Packages : \n' + packages)
+    print('Runtime Arguments : \n' + arguments)
+    pretty_print('Error Traceback :')
     traceback.print_exc()
     pretty_print(
         '`pockyt` encountered an error ! Submit the (above) '
