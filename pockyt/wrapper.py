@@ -1,7 +1,6 @@
-from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, print_function, unicode_literals
 
 import os
-import pip
 import sys
 import traceback
 import webbrowser
@@ -23,10 +22,15 @@ def print_bug_report():
 
     python_version = str(sys.version_info[:3])
     arguments = str(sys.argv[1:])
-    packages = str([
-        (package.key, package.version)
-        for package in pip.get_installed_distributions()
-    ])
+    try:
+        import pip
+    except ImportError:
+        packages = '`pip` not installed !'
+    else:
+        packages = str([
+            (package.key, package.version)
+            for package in pip.get_installed_distributions()
+        ])
 
     pretty_print('Bug Report :')
     print('Python Version : ' + python_version)
