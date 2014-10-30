@@ -4,6 +4,9 @@ pockyt
 
 A usable, customizable commandline client to automate and manage your pocket collection.
 
+.. image:: https://badge.fury.io/py/pockyt.svg
+    :target: http://badge.fury.io/py/pockyt
+
 Links
 -----
 
