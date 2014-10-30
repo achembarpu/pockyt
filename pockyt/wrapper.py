@@ -2,27 +2,57 @@ from __future__ import print_function, unicode_literals
 
 import os
 import sys
+import traceback
 import webbrowser
 from collections import OrderedDict
 
 import requests
 
+from .api import API
+
+
+def print_bug_report():
+    """
+    Prints a usable bug report
+    """
+
+    separator = '-' * 66
+    pretty_print = lambda s:\
+        print(separator + '\n{0}\n'.format(s) + separator)
+
+    pretty_print('Bug Report :')
+    print('ARGV :\t' + str(sys.argv[1:]))
+    pretty_print('TRACEBACK :')
+    traceback.print_exc()
+    pretty_print(
+        '`pockyt` encountered an error ! Submit the (above) '
+        'bug report at :\n` {0} `'.format(API.ISSUE_URL)
+    )
+
 
 class SuppressedStdout(object):
+    """
+    Suppresses STDOUT, utilize with the `with` keyword
+    """
 
     def __init__(self):
-        self.stdout_fileno = -1
+        self.orig_stdout = sys.stdout.fileno()
+        self.copy_stdout = os.dup(self.orig_stdout)
+        self.devnull = None
 
     def __enter__(self):
-        devnull = open(os.devnull, 'w')
-        self.stdout_fileno = os.dup(sys.stdout.fileno())
-        os.dup2(devnull.fileno(), 1)
+        self.devnull = open(os.devnull, 'w')
+        os.dup2(self.devnull.fileno(), self.orig_stdout)
 
     def __exit__(self, *args):
-        os.dup2(self.stdout_fileno, 1)
+        os.dup2(self.copy_stdout, self.orig_stdout)
+        self.devnull.close()
 
 
 class Network(object):
+    """
+    Safe POST Request, with error-handling
+    """
 
     @staticmethod
     def post_request(link, payload):
@@ -44,6 +74,9 @@ class Network(object):
 
 
 class Browser(object):
+    """
+    Silently open browser windows/tabs
+    """
 
     @staticmethod
     def open(link, new=0, autoraise=True):

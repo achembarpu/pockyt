@@ -6,6 +6,7 @@ import sys
 from .api import API
 from .auth import Authenticator
 from .client import Client
+from .wrapper import print_bug_report
 
 
 class Pockyt(object):
@@ -146,6 +147,9 @@ def main():
         app = Pockyt()
         app.run()
     except KeyboardInterrupt:
+        sys.exit(1)
+    except Exception:
+        print_bug_report()
         sys.exit(1)
 
 

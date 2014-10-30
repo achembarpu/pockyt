@@ -10,7 +10,7 @@ if python_v != (2, 7) and python_v != (3, 4):
     sys.exit(1)
 
 name = 'pockyt'
-version = '0.4'
+version = '0.5'
 
 setup(
     name=name,
