@@ -38,16 +38,22 @@ class Client(object):
         # access API
         self._req = Network.post_request(self._api_endpoint, self._payload)
 
-    def _print_to_file(self):
+    def _output_to_file(self):
         with open(self._args.output, 'w+') as outfile:
             for info in self._output:
                 line = self._format_spec.format(**info)
-                outfile.write(line.encode('utf-8'))
+                try:
+                    outfile.write(line)
+                except UnicodeEncodeError:
+                    outfile.write(line.encode('utf-8'))
 
     def _print_to_console(self):
         for info in self._output:
             line = self._format_spec.format(**info)
-            print(line.encode('utf-8'), end='')
+            try:
+                print(line, end='')
+            except UnicodeEncodeError:
+                print(line.encode('utf-8'), end='')
 
     def _open_in_browser(self):
         # open a new window
@@ -223,7 +229,7 @@ class Client(object):
             if self._args.output == 'browser':
                 self._open_in_browser()
             elif self._args.output:
-                self._print_to_file()
+                self._output_to_file()
 
         else:
             if self._args.input == 'console':
