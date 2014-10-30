@@ -42,18 +42,12 @@ class Client(object):
         with open(self._args.output, 'w+') as outfile:
             for info in self._output:
                 line = self._format_spec.format(**info)
-                try:
-                    outfile.write(line)
-                except UnicodeEncodeError:
-                    outfile.write(line.encode('utf-8'))
+                outfile.write(line.encode('utf-8'))
 
     def _print_to_console(self):
         for info in self._output:
             line = self._format_spec.format(**info)
-            try:
-                print(line, end='')
-            except UnicodeEncodeError:
-                print(line.encode('utf-8'), end='')
+            print(line.encode('utf-8'), end='')
 
     def _open_in_browser(self):
         # open a new window
@@ -104,7 +98,8 @@ class Client(object):
                 self._args.format, 'utf-8'
             ).decode('unicode_escape')
         except TypeError:
-            self._args.format = self._args.format.decode('unicode_escape')
+            self._args.format = self._args\
+                .format.decode('unicode_escape')
 
         keys = ['id', 'title', 'link', 'excerpt', 'tags']
         info = dict((key, None) for key in keys)
@@ -187,7 +182,6 @@ class Client(object):
     def _modify(self):
         payload = {'actions': []}
 
-        action = ''
         if self._args.delete:
             action = 'delete'
         elif self._args.archive != -1:
@@ -200,6 +194,8 @@ class Client(object):
                 action = 'favorite'
             else:
                 action = 'unfavorite'
+        else:
+            action = ''
 
         for info in self._input:
             payload['actions'].append({

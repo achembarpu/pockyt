@@ -49,12 +49,9 @@ class Authenticator(object):
 
     def _save_config(self):
         self._config = configparser.ConfigParser()
-        try:
-            self._config['CREDENTIALS'] = self.credentials
-        except AttributeError:
-            self._config.add_section('CREDENTIALS')
-            for (k, v) in self.credentials.items():
-                self._config.set('CREDENTIALS',  k, v)
+        self._config.add_section(API.CONFIG_HEADER)
+        for (k, v) in self.credentials.items():
+            self._config.set(API.CONFIG_HEADER,  k, v)
 
         with open(self._config_path, 'w+') as cf:
             self._config.write(cf)
@@ -107,14 +104,9 @@ class Authenticator(object):
     def _load(self):
         self._load_config()
         try:
-            credentials = self._config['CREDENTIALS']
-            self._consumer_key = credentials['consumer_key']
-            self._access_token = credentials['access_token']
-            self._username = credentials['username']
-        except AttributeError:
-            self._consumer_key = self._config.get('CREDENTIALS', 'consumer_key')
-            self._access_token = self._config.get('CREDENTIALS', 'access_token')
-            self._username = self._config.get('CREDENTIALS', 'username')
+            self._consumer_key = self._config.get(API.CONFIG_HEADER, 'consumer_key')
+            self._access_token = self._config.get(API.CONFIG_HEADER, 'access_token')
+            self._username = self._config.get(API.CONFIG_HEADER, 'username')
         except KeyError:
             print('Connect an account first!')
             sys.exit(1)
