@@ -157,4 +157,4 @@ Then, submit a `pull request <https://github.com/arvindch/pockyt/compare>`_.
 License
 -------
 
-This project uses the `GNU GPLv3 License <https://github.com/arvindch/pockyt/blob/master/LICENSE>`_.
+This project uses the `GNU GPLv3 License <https://github.com/arvindch/pockyt/blob/master/LICENSE.txt>`_.
