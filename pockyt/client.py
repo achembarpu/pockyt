@@ -104,11 +104,10 @@ class Client(object):
                 self._args.format, 'utf-8'
             ).decode('unicode_escape')
         except TypeError:
-            self._args.format = self._args\
+            self._args.format = self._args \
                 .format.decode('unicode_escape')
 
-        keys = ['id', 'title', 'link', 'excerpt', 'tags']
-        info = dict((key, None) for key in keys)
+        info = dict((key, None) for key in API.INFO_KEYS)
 
         try:
             self._args.format.format(**info)
@@ -172,13 +171,15 @@ class Client(object):
         ]
 
     def _put(self):
-        payload = {'actions': []}
-
-        for info in self._input:
-            payload['actions'].append({
-                'action': 'add',
-                'url': info['link'],
-            })
+        payload = {
+            'actions': [
+                {
+                    'action': 'add',
+                    'url': info['link'],
+                }
+                for info in self._input
+            ]
+        }
 
         self._payload = payload
         self._api_endpoint = API.MODIFY_URL
@@ -186,8 +187,6 @@ class Client(object):
         self._api_request()
 
     def _modify(self):
-        payload = {'actions': []}
-
         if self._args.delete:
             action = 'delete'
         elif self._args.archive != -1:
@@ -203,11 +202,15 @@ class Client(object):
         else:
             action = ''
 
-        for info in self._input:
-            payload['actions'].append({
-                'action': action,
-                'item_id': info['id'],
-            })
+        payload = {
+            'actions': [
+                {
+                    'action': action,
+                    'item_id': info['id'],
+                }
+                for info in self._input
+            ]
+        }
 
         self._payload = payload
         self._api_endpoint = API.MODIFY_URL
