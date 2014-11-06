@@ -113,7 +113,7 @@ class Client(object):
         try:
             self._args.format.format(**info)
         except KeyError:
-            print('Invalid Format Specifier!')
+            print('Invalid Format Specifier !')
             sys.exit(1)
         else:
             self._format_spec = self._args.format + '\n'
@@ -157,7 +157,7 @@ class Client(object):
         items = json_data.get('list') or {}
 
         if len(items) == 0:
-            print('No items found!')
+            print('No items found !')
             sys.exit(0)
 
         self._output = [
