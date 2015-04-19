@@ -96,7 +96,7 @@ class Pockyt(object):
         )
         put_parser.add_argument(
             '-i', '--input', default='console', metavar='<option>',
-            help='obtain input : <option> : {console, [redirect, filename]}',
+            help='obtain input : <option> : {console, [redirect, link, filename]}',
         )
 
         # modify items in collection

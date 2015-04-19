@@ -97,6 +97,10 @@ class Client(object):
                 else:
                     continue
 
+    def _get_args_input(self):
+        info = self._unformat_spec.parse(self._args.input.strip())
+        self._input.append(info)
+
     def _validate_format(self):
         # interpret escape sequences
         try:
@@ -239,6 +243,8 @@ class Client(object):
                 self._get_console_input()
             elif self._args.input == 'redirect':
                 self._get_redirect_input()
+            elif self._args.input.startswith('http'):
+                self._get_args_input()
             else:
                 self._get_file_input()
 
