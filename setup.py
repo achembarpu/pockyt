@@ -25,7 +25,7 @@ setup(
     url='https://github.com/arvindch/{0}'.format(name),
     license='GPLv3+',
     install_requires=[
-        'requests>=2.4',
+        'requests>=2.6',
         'parse>=1.6',
     ],
     download_url='https://github.com/arvindch/{0}/tarball/{1}'.format(name, version),
