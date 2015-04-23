@@ -13,13 +13,21 @@ if sys.version_info[0:2] not in [(2, 7), (3, 4)]:
 name = 'pockyt'
 version = '0.7'
 
+try:
+    desc_file = open('README.rst')
+except:
+    desc = ''
+else:
+    desc = desc_file.read()
+    desc_file.close()
+
 
 setup(
     name=name,
     packages=[name],
     version=version,
     description='automate and manage your pocket collection',
-    long_description=open('README.rst').read(),
+    long_description=desc,
     author='Arvind Chembarpu',
     author_email='achembarpu@gmail.com',
     url='https://github.com/arvindch/{0}'.format(name),
