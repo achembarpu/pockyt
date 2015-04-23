@@ -11,7 +11,7 @@ if sys.version_info[0:2] not in [(2, 7), (3, 4)]:
 
 
 name = 'pockyt'
-version = '0.7'
+version = '0.8'
 
 try:
     desc_file = open('README.rst')
