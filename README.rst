@@ -31,7 +31,7 @@ Using simple command sequences, routine tasks can be automated and reusable scri
 Quick Start
 -----------
 
-``pockyt`` supports Python ``2.7.x`` and ``3.4.x``
+``pockyt`` supports Python ``2.7.x`` and ``3.4.x``, on both ``Windows`` & ``GNU/Linux`` platforms.
 
 1. ``$ pip install pockyt --upgrade``
 2. ``$ pockyt reg``
@@ -114,7 +114,7 @@ Documentation
                         link, excerpt, tags]}
   -i <option>, --input <option>
                         obtain input : <option> : {console, [redirect,
-                        filename]}
+                        link, filename]}
 
 **pockyt mod -h** :
 
