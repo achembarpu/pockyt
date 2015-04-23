@@ -16,31 +16,34 @@ def print_bug_report():
     Prints a usable bug report
     """
 
-    separator = '-' * 66
-    pretty_print = lambda s:\
-        print(separator + '\n{0}\n'.format(s) + separator)
+    separator = '\n' + '-' * 66 + '\n'
 
     python_version = str(sys.version_info[:3])
     arguments = str(sys.argv[1:])
+
     try:
         import pip
     except ImportError:
         packages = '`pip` not installed !'
     else:
-        packages = str([
-            (package.key, package.version)
+        package_details = lambda _p: \
+            '{0} - {1}'.format(_p.key, _p.version)
+        packages = '\n'.join((
+            package_details(package)
             for package in pip.get_installed_distributions()
-        ])
+        ))
 
-    pretty_print('Bug Report :')
-    print('Python Version : ' + python_version)
-    print('Installed Packages : \n' + packages)
-    print('Runtime Arguments : \n' + arguments)
-    pretty_print('Error Traceback :')
-    traceback.print_exc()
-    pretty_print(
-        '`pockyt` encountered an error ! Submit the (above) '
-        'bug report at :\n` {0} `'.format(API.ISSUE_URL)
+    print(
+        '{0}Bug Report :\n'
+        '`pockyt` has encountered an error ! Submit the (above) '
+        'bug report at \n` {1} `.{0}'
+        'Python Version :\n{2}{0}'
+        'Installed Packages :\n{3}{0}'
+        'Runtime Arguments :\n{4}{0}'
+        'Error Traceback :\n{5}{0}'.format(
+            separator, API.ISSUE_URL, python_version,
+            packages, arguments, traceback.format_exc().strip()
+        )
     )
 
 
