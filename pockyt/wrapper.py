@@ -11,38 +11,36 @@ import requests
 from .api import API
 
 
-def print_bug_report():
+def print_bug_report(message=''):
     """
     Prints a usable bug report
     """
 
-    separator = '\n' + '-' * 66 + '\n'
+    separator = '\n' + ('-' * 69) + '\n'
 
     python_version = str(sys.version_info[:3])
-    arguments = str(sys.argv[1:])
+    arguments = '\n'.join(arg for arg in sys.argv[1:])
 
     try:
         import pip
     except ImportError:
         packages = '`pip` not installed !'
     else:
-        package_details = lambda _p: \
-            '{0} - {1}'.format(_p.key, _p.version)
-        packages = '\n'.join((
-            package_details(package)
+        packages = '\n'.join(
+            '{0} - {1}'.format(package.key, package.version)
             for package in pip.get_installed_distributions()
-        ))
+        )
 
     print(
-        '{0}Bug Report :\n'
-        '`pockyt` has encountered an error ! Submit the (above) '
-        'bug report at \n` {1} `.{0}'
-        'Python Version :\n{2}{0}'
+        '```{0}Bug Report :\n'
+        '`pockyt` has encountered an error ! '
+        'Please submit this bug report at \n` {1} `.{0}'
+        'Python Version : {2}{0}'
         'Installed Packages :\n{3}{0}'
         'Runtime Arguments :\n{4}{0}'
-        'Error Traceback :\n{5}{0}'.format(
+        'Error Message :\n{5}{0}```'.format(
             separator, API.ISSUE_URL, python_version,
-            packages, arguments, traceback.format_exc().strip()
+            packages, arguments, message or traceback.format_exc().strip()
         )
     )
 
