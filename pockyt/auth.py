@@ -107,8 +107,8 @@ class Authenticator(object):
             self._consumer_key = self._config.get(API.CONFIG_HEADER, 'consumer_key')
             self._access_token = self._config.get(API.CONFIG_HEADER, 'access_token')
             self._username = self._config.get(API.CONFIG_HEADER, 'username')
-        except KeyError:
-            print('Connect an account first!')
+        except (configparser.NoSectionError, KeyError):
+            print('Please connect an account first, by running `pockyt reg` !')
             sys.exit(1)
 
     def run(self):
