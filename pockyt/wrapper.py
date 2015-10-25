@@ -66,7 +66,7 @@ class SuppressedStdout(object):
 
 class Network(object):
     """
-    Safe POST Request, with error-handling
+    Safe Network Requests, with error-handling
     """
 
     @staticmethod
@@ -86,6 +86,18 @@ class Network(object):
                 req.api_json = {}
             finally:
                 return req
+
+    @staticmethod
+    def get_request(link):
+        req = requests.get(link)
+
+        if req.status_code != 200:
+            print_bug_report('Article Access Error - {0} ! : {1}'.format(
+                link, req.status_code,
+            ))
+            sys.exit(1)
+        else:
+            return req
 
 
 class Browser(object):
