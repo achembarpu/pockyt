@@ -18,7 +18,7 @@ import os
 import sys
 
 from .api import API
-from .wrapper import Network
+from .wrapper import Browser, Network
 
 
 class Authenticator(object):
@@ -82,17 +82,27 @@ class Authenticator(object):
         self._username = info['username'][0]
 
     def _setup(self):
-        input('Create an application, via this link :\n` {0} `\n'
-              'Press Enter when done...'
-              .format(API.APP_CREATE_URL))
+        print('Note: During the registration process, pockyt will attempt to '
+              'open the required links in your default browser. '
+              'If any errors occur, you can use the printed links instead.\n')
 
-        self._consumer_key = input('Enter your Consumer Key: ')
+        create_link = API.APP_CREATE_URL
+
+        Browser.open_new_tab(create_link)
+
+        input('Step 1:\nCreate an application, via this link :\n` {0} `\n'
+              'Press Enter when done...'.format(create_link))
+
+        self._consumer_key = input('Step2:\nEnter your Consumer Key: ')
 
         self._obtain_request_token()
 
-        input('Connect an account, via this link :\n` {0} `\n'
-              'Press Enter to when done...'
-              .format(API.get_auth_user_url(self._request_token)))
+        auth_link = API.get_auth_user_url(self._request_token)
+
+        Browser.open_new_tab(auth_link)
+
+        print('Step 3:\nConnect an account, via this link :\n` {0} `\n'
+              'Press Enter to when done...'.format(auth_link))
 
         self._obtain_access_token()
 
