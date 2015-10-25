@@ -11,7 +11,7 @@ if sys.version_info[0:2] not in ((2, 7), (3, 4), (3, 5)):
 
 
 name = 'pockyt'
-version = '0.8'
+version = '0.9'
 
 try:
     with open('README.rst') as f:
