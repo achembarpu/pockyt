@@ -101,7 +101,7 @@ Documentation
                         restrict items to domain : <domain> : {None}
   -f <specifier>, --format <specifier>
                         format output : <specifier> : {'{id} | {title} |
-                        {link}', [id, title, link, excerpt, tags]}
+                        {link}', [id, title, link, excerpt, content, tags]}
   -o <option>, --output <option>
                         redirect output : <option> : {None, [browser,
                         filename]}

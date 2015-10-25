@@ -78,7 +78,7 @@ class Pockyt(object):
             '-f', '--format', metavar='<specifier>',
             default='{id} | {title} | {link}',
             help='format output : <specifier> : {\'{id} | {title} | {link}\', '
-                 '[id, title, link, excerpt, tags]}',
+                 '[id, title, link, excerpt, content, tags]}',
         )
         get_parser.add_argument(
             '-o', '--output', metavar='<option>',
