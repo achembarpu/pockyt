@@ -108,8 +108,7 @@ class Client(object):
                 self._args.format, 'utf-8'
             ).decode('unicode_escape')
         except TypeError:
-            self._args.format = self._args \
-                .format.decode('unicode_escape')
+            self._args.format = self._args.format.decode('unicode_escape')
 
         info = dict((key, None) for key in API.INFO_KEYS)
 
@@ -163,26 +162,20 @@ class Client(object):
             print('No items found !')
             sys.exit(0)
 
-        self._output = [
-            {
-                'id': item.get('item_id'),
-                'title': item.get('resolved_title'),
-                'link': item.get('resolved_url'),
-                'excerpt': item.get('excerpt'),
-                'tags': item.get('tags'),
-            }
-            for item in items.values()
-        ]
+        self._output = [{
+            'id': item.get('item_id'),
+            'title': item.get('resolved_title'),
+            'link': item.get('resolved_url'),
+            'excerpt': item.get('excerpt'),
+            'tags': item.get('tags'),
+        } for item in items.values()]
 
     def _put(self):
         payload = {
-            'actions': [
-                {
-                    'action': 'add',
-                    'url': info['link'],
-                }
-                for info in self._input
-            ]
+            'actions': [{
+                'action': 'add',
+                'url': info['link'],
+            } for info in self._input]
         }
 
         self._payload = payload
@@ -207,13 +200,10 @@ class Client(object):
             action = ''
 
         payload = {
-            'actions': [
-                {
-                    'action': action,
-                    'item_id': info['id'],
-                }
-                for info in self._input
-            ]
+            'actions': [{
+                'action': action,
+                'item_id': info['id'],
+            } for info in self._input]
         }
 
         self._payload = payload
