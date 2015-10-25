@@ -4,9 +4,9 @@ import sys
 from setuptools import setup
 
 
-if sys.version_info[0:2] not in [(2, 7), (3, 4)]:
+if sys.version_info[0:2] not in ((2, 7), (3, 4), (3, 5)):
     print('This version of Python is unsupported !\n'
-          'Please use Python 2.7.x or 3.4.x !')
+          'Please use Python 2.7.x, 3.4.x, or 3.5.x !')
     sys.exit(1)
 
 
@@ -49,6 +49,7 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
     entry_points={
         'console_scripts': [
