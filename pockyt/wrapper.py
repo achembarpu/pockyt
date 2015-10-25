@@ -74,7 +74,7 @@ class Network(object):
         req = requests.post(link, json=payload)
 
         if req.status_code != 200:
-            print('Error {0} ! : {1}'.format(
+            print_bug_report('API Error {0} ! : {1}'.format(
                 req.headers.get('X-Error-Code'),
                 req.headers.get('X-Error'),
             ))
