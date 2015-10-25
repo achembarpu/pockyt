@@ -23,7 +23,7 @@ class API(object):
 
     CONFIG_HEADER = 'CREDENTIALS'
 
-    INFO_KEYS = ['id', 'title', 'link', 'excerpt', 'tags']
+    INFO_KEYS = ['id', 'title', 'link', 'excerpt', 'content', 'tags']
 
     @classmethod
     def get_auth_user_url(cls, rt):
