@@ -7,6 +7,7 @@ import webbrowser
 from collections import OrderedDict
 
 import requests
+from readability.readability import Document
 
 from .api import API
 
@@ -121,3 +122,20 @@ class Browser(object):
     @classmethod
     def open_new_tab(cls, link):
         cls.open(link, new=2)
+
+
+class Article(object):
+    """
+    Handles article related work
+    """
+
+    @staticmethod
+    def extract_content(link):
+        if not link: return ''
+
+        response = Network.get_request(link)
+
+        article = Document(response.text)
+        content = article.summary()
+
+        return content

@@ -11,7 +11,7 @@ import time
 import parse
 
 from .api import API
-from .wrapper import Browser, Network
+from .wrapper import Article, Browser, Network
 
 
 class Client(object):
@@ -30,6 +30,8 @@ class Client(object):
         self._unformat_spec = None
         self._output = []
         self._input = []
+
+        self.GET_CONTENT = False
 
     def _api_request(self):
         # add API access credentials
@@ -120,6 +122,8 @@ class Client(object):
         else:
             self._format_spec = self._args.format + '\n'
             self._unformat_spec = parse.compile(self._args.format)
+            if '{content}' in self._format_spec:
+                self.GET_CONTENT = True
 
     def _get(self):
         # create request payload
@@ -168,6 +172,8 @@ class Client(object):
             'link': item.get('resolved_url'),
             'excerpt': item.get('excerpt'),
             'tags': item.get('tags'),
+            'content': '' if not self.GET_CONTENT
+                        else Article.extract_content(item.get('resolved_url'))
         } for item in items.values()]
 
     def _put(self):
