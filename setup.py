@@ -14,13 +14,10 @@ name = 'pockyt'
 version = '0.8'
 
 try:
-    desc_file = open('README.rst')
+    with open('README.rst') as f:
+        desc = f.read()
 except:
     desc = ''
-else:
-    desc = desc_file.read()
-    desc_file.close()
-
 
 setup(
     name=name,
