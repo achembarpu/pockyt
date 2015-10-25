@@ -32,6 +32,7 @@ setup(
     install_requires=[
         'requests>=2.6',
         'parse>=1.6',
+        'readability-lxml>=0.6',
     ],
     download_url='https://github.com/arvindch/{0}/tarball/{1}'.format(name, version),
     keywords=['pocket', 'commandline', 'automation'],
