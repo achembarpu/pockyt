@@ -1,7 +1,7 @@
 from __future__ import absolute_import, print_function, unicode_literals, with_statement
 
 import sys
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 if sys.version_info[0:2] not in ((2, 7), (3, 4), (3, 5)):
@@ -21,7 +21,7 @@ except:
 
 setup(
     name=name,
-    packages=[name],
+    packages=find_packages(),
     version=version,
     description='automate and manage your pocket collection',
     long_description=desc,
