@@ -7,9 +7,6 @@ A usable, customizable commandline client to automate and manage your pocket col
 .. image:: http://img.shields.io/pypi/v/pockyt.svg?style=flat
     :target: https://pypi.python.org/pypi/pockyt
 
-.. image:: http://img.shields.io/pypi/dm/pockyt.svg?style=flat
-    :target: https://pypi.python.org/pypi/pockyt
-
 .. image:: http://img.shields.io/pypi/l/pockyt.svg?style=flat
     :target: https://pypi.python.org/pypi/pockyt
 
