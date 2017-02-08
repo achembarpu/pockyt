@@ -3,7 +3,10 @@ __pycache__/
 *.py[cod]
 
 # Distribution / packaging
+.conda
 .Python
+.env/
+.venv/
 env/
 venv/
 build/
@@ -16,6 +19,3 @@ parts/
 sdist/
 var/
 *.egg-info/
-
-# IDE cache
-.idea/
