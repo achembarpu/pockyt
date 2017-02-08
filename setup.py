@@ -15,7 +15,7 @@ version = '1.1'
 motto = 'automate and manage your pocket collection'
 author = 'Arvind Chembarpu'
 email = 'achembarpu@gmail.com'
-github = 'https://github.com/arvindch'
+github = 'https://github.com/arvindch/%s' % (name)
 
 try:
     with open('README.rst') as f:
@@ -31,13 +31,12 @@ setup(
     long_description=description,
     author=author,
     author_email=email,
-    url='{}/{}'.format(github, name),
+    url=github,
     license='GPLv3+',
     install_requires=[
-        'requests>=2.13',
         'parse>=1.6',
     ],
-    download_url='{}/{}/tarball/{}'.format(github, name, version),
+    download_url='%s/tarball/%s' % (github, version),
     keywords=['pocket', 'commandline', 'automation'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',

@@ -1,12 +1,19 @@
 from __future__ import absolute_import, print_function, unicode_literals, with_statement
 
+import json
 import os
 import sys
 import traceback
 import webbrowser
 from collections import OrderedDict
-
-import requests
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+try:
+    from urllib.request import urlopen, Request
+except ImportError:
+    from urllib2 import urlopen, Request
 
 from .api import API
 
@@ -24,7 +31,7 @@ def print_bug_report(message=''):
     try:
         import pip
     except ImportError:
-        packages = '`pip` not installed !'
+        packages = '`pip` is not installed !'
     else:
         packages = '\n'.join(
             '{0} - {1}'.format(package.key, package.version)
@@ -64,6 +71,55 @@ class SuppressedStdout(object):
         self.devnull.close()
 
 
+class Response(object):
+    """
+    Wraps a urllib request to provide a common python 2/3 API
+    """
+
+    def __init__(self, response):
+        self._response = response
+
+        self.code = self._get_code()
+        self.info = response.info()
+        self.encoding = self.get_param('charset') or API.ENCODING
+        self.text = response.read().decode(self.encoding)
+        self.data = self._get_data()
+
+    def _get_code(self):
+        try:  # python 3
+            code = self._response._get_code()
+        except AttributeError:  # python 2
+            code = self._response.getcode()
+        return code
+
+    def _get_data(self):
+        try:
+            data = json.loads(
+                self.text,
+                object_pairs_hook=OrderedDict,
+            )
+        except ValueError:
+            data = {}
+        return data
+
+    def get_header(self, key):
+        try:  # python 3
+            value = self._response.getheader(key)
+        except AttributeError:  # python 2
+            value = self.info.getheader(key)
+        return value
+
+    def get_param(self, key):
+        try:  # python 3
+            value = self.info.get_param(key)
+        except AttributeError:  # python 2
+            value = self.info.getparam(key)
+        return value
+
+    def get_qs(self):
+        return urlparse.parse_qs(self.text)
+
+
 class Network(object):
     """
     Safe POST Request, with error-handling
@@ -71,21 +127,22 @@ class Network(object):
 
     @staticmethod
     def post_request(link, payload):
-        req = requests.post(link, json=payload)
+        request_data = json.dumps(payload).encode(API.ENCODING)
+        headers = {
+            'Content-Type': API.CONTENT_TYPE,
+            'Content-Length': len(request_data)
+        }
+        request = Request(link, request_data, headers)
+        response = Response(urlopen(request))
 
-        if req.status_code != 200:
+        if response.code != 200:
             print_bug_report('API Error {0} ! : {1}'.format(
-                req.headers.get('X-Error-Code'),
-                req.headers.get('X-Error'),
+                response.get_header('X-Error-Code'),
+                response.get_header('X-Error'),
             ))
             sys.exit(1)
         else:
-            try:  # preserve json response ordering, as per API
-                req.api_json = req.json(object_pairs_hook=OrderedDict)
-            except ValueError:
-                req.api_json = {}
-            finally:
-                return req
+            return response
 
 
 class Browser(object):

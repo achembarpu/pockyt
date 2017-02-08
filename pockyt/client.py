@@ -24,7 +24,7 @@ class Client(object):
         self._credentials = credentials
         self._api_endpoint = ''
         self._payload = {}
-        self._req = None
+        self._response = None
 
         self._format_spec = ''
         self._unformat_spec = None
@@ -36,7 +36,7 @@ class Client(object):
         self._payload.update(self._credentials)
 
         # access API
-        self._req = Network.post_request(self._api_endpoint, self._payload)
+        self._response = Network.post_request(self._api_endpoint, self._payload)
 
     def _output_to_file(self):
         with open(self._args.output, 'w+') as outfile:
@@ -45,7 +45,7 @@ class Client(object):
                 try:
                     outfile.write(line)
                 except UnicodeEncodeError:
-                    outfile.write(line.encode('utf-8'))
+                    outfile.write(line.encode(API.ENCODING))
 
     def _print_to_console(self):
         for info in self._output:
@@ -53,17 +53,16 @@ class Client(object):
             try:
                 print(line, end='')
             except UnicodeEncodeError:
-                print(line.encode('utf-8'), end='')
+                print(line.encode(API.ENCODING), end='')
 
     def _open_in_browser(self):
         # open a new window
         Browser.open_new_window(self._output[0]['link'])
 
         for info in self._output[1:]:
-            # open new tabs
+            # pace new tabs
+            time.sleep(1)
             Browser.open_new_tab(info['link'])
-            # pace webbrowser actions
-            time.sleep(2)
 
     def _get_console_input(self):
         print('Enter data: {0}'.format(self._args.format.strip()))
@@ -105,10 +104,10 @@ class Client(object):
         # interpret escape sequences
         try:
             self._args.format = bytes(
-                self._args.format, 'utf-8'
-            ).decode('unicode_escape')
+                self._args.format, API.ENCODING
+            ).decode(API.DECODING)
         except TypeError:
-            self._args.format = self._args.format.decode('unicode_escape')
+            self._args.format = self._args.format.decode(API.DECODING)
 
         info = dict((key, None) for key in API.INFO_KEYS)
 
@@ -155,27 +154,26 @@ class Client(object):
 
         self._api_request()
 
-        json_data = self._req.api_json
-        items = json_data.get('list') or {}
+        items = self._response.data.get('list', {})
 
         if len(items) == 0:
             print('No items found !')
             sys.exit(0)
 
-        self._output = [{
+        self._output = tuple({
             'id': item.get('item_id'),
             'title': item.get('resolved_title'),
             'link': item.get('resolved_url'),
             'excerpt': item.get('excerpt'),
             'tags': item.get('tags'),
-        } for item in items.values()]
+        } for item in items.values())
 
     def _put(self):
         payload = {
-            'actions': [{
+            'actions': tuple({
                 'action': 'add',
                 'url': info['link'],
-            } for info in self._input]
+            } for info in self._input)
         }
 
         self._payload = payload
@@ -200,10 +198,10 @@ class Client(object):
             action = ''
 
         payload = {
-            'actions': [{
+            'actions': tuple({
                 'action': action,
                 'item_id': info['id'],
-            } for info in self._input]
+            } for info in self._input),
         }
 
         self._payload = payload

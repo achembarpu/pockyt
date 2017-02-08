@@ -144,13 +144,15 @@ class Pockyt(object):
 
 def main():
     try:
+        error = 0
         app = Pockyt()
         app.run()
     except KeyboardInterrupt:
-        sys.exit(1)
+        pass
     except Exception:
         print_bug_report()
-        sys.exit(1)
+        error = 1
+    sys.exit(error)
 
 
 if __name__ == '__main__':

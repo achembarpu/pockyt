@@ -9,10 +9,6 @@ try:
     import ConfigParser as configparser
 except ImportError:
     import configparser
-try:
-    import urlparse
-except ImportError:
-    import urllib.parse as urlparse
 
 import os
 import sys
@@ -53,8 +49,8 @@ class Authenticator(object):
         for (k, v) in self.credentials.items():
             self._config.set(API.CONFIG_HEADER,  k, v)
 
-        with open(self._config_path, 'w+') as cf:
-            self._config.write(cf)
+        with open(self._config_path, 'w+') as f:
+            self._config.write(f)
 
     def _load_config(self):
         self._config = configparser.ConfigParser()
@@ -65,21 +61,21 @@ class Authenticator(object):
             'consumer_key': self._consumer_key,
             'redirect_uri': API.REDIRECT_URL,
         }
-        req = Network.post_request(API.REQUEST_TOKEN_URL, payload)
-        info = urlparse.parse_qs(req.text)
+        response = Network.post_request(API.REQUEST_TOKEN_URL, payload)
+        qs = response.get_qs()
 
-        self._request_token = info['code'][0]
+        self._request_token = qs['code'][0]
 
     def _obtain_access_token(self):
         payload = {
             'consumer_key': self._consumer_key,
             'code': self._request_token,
         }
-        req = Network.post_request(API.ACCESS_TOKEN_URL, payload)
-        info = urlparse.parse_qs(req.text)
+        response = Network.post_request(API.ACCESS_TOKEN_URL, payload)
+        qs = response.get_qs()
 
-        self._access_token = info['access_token'][0]
-        self._username = info['username'][0]
+        self._access_token = qs['access_token'][0]
+        self._username = qs['username'][0]
 
     def _setup(self):
         print('Note: During the registration process, pockyt will attempt to '
@@ -93,7 +89,7 @@ class Authenticator(object):
         input('Step 1:\nCreate an application, via this link :\n` {0} `\n'
               'Press Enter when done...'.format(create_link))
 
-        self._consumer_key = input('Step2:\nEnter your Consumer Key: ')
+        self._consumer_key = input('Step 2:\nEnter your Consumer Key: ')
 
         self._obtain_request_token()
 
