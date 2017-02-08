@@ -30,8 +30,8 @@ Quick Start
 
 ``pockyt`` supports Python ``2.7+`` and ``3.4+`` on ``Windows``, ``macOS``, & ``GNU/Linux`` platforms.
 
-1. ``$ pip install pockyt --upgrade``
-2. ``$ pockyt reg``
+1. ``pip install pockyt --upgrade``
+2. ``pockyt reg``
 3. Follow the prompts to connect your pocket account to pockyt.
 4. Refer the Documentation and Examples for usage info and ideas.
 
@@ -40,23 +40,23 @@ Examples
 
 * Get the latest 5 items' links & excerpts and save them to a file.
   ::
-      $ pockyt get -n 5 -f '{link} - {excerpt}' -o readlater.txt
+      pockyt get -n 5 -f '{link} - {excerpt}' -o readlater.txt
 
 * Get the oldest 10 items and delete them from Pocket.
   ::
-      $ pockyt get -n 10 -r oldest -f '{id}' | pockyt mod -d -i redirect
+      pockyt get -n 10 -r oldest -f '{id}' | pockyt mod -d -i redirect
 
 * Get all the items about 'python' and open them in a browser.
   ::
-      $ pockyt get -q 'python' -o browser
+      pockyt get -q 'python' -o browser
 
 * Get all the links from a 'links.txt' and add them to Pocket.
   ::
-      $ pockyt put -i links.txt
+      pockyt put -i links.txt
 
 * Get all favorited items and archive them.
   ::
-      $ pockyt get -v 1 | pockyt mod -a 1 -i redirect
+      pockyt get -v 1 | pockyt mod -a 1 -i redirect
 
 
 Documentation
