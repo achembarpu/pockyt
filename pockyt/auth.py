@@ -98,7 +98,7 @@ class Authenticator(object):
         Browser.open_new_tab(auth_link)
 
         input('Step 3:\nConnect an account, via this link :\n` {0} `\n'
-              'Press Enter to when done...'.format(auth_link))
+              'Press Enter when done...'.format(auth_link))
 
         self._obtain_access_token()
 
