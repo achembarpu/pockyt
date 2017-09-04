@@ -125,7 +125,7 @@ class Client(object):
         payload = {
             'state': self._args.state,
             'sort': self._args.sort,
-            #TODO: 'detailType': 'complete',
+            'detailType': 'complete',
         }
 
         if self._args.content != 'all':
@@ -173,7 +173,7 @@ class Client(object):
         """
         item_tags will be either: None, or OrderedDictionary
         """
-        return item_tags
+        return sorted(item_tags.keys()) if item_tags else []
 
     def _put(self):
         payload = {
