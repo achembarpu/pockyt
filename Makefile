@@ -13,4 +13,7 @@ teardown:
 	rm -rf .venv
 
 test:
-	python tests.py 
+	python tests.py
+
+run:
+	@pockyt get -s unread -f '{title} | {tags}'
