@@ -16,11 +16,17 @@ class TestStringMethods(unittest.TestCase):
         tags = self._client._displayTags(None)
         self.assertEqual(tags, [])
 
+    def test_returned_tags_are_all_ascii_strings(self):
+        tags = self._client._displayTags(self.newTagDictionary())
+
+        non_string_tags = [t for t in tags if not isinstance(t, str)]
+        self.assertEqual(non_string_tags, [])
+
     def newTagDictionary(self):
         d = {
-        "tag1": "object B",
+        u"tag1": "object B",
         "tag2": "object A",
-        "tag3": "object Z",
+        u"tag3": "object Z",
         }
         return collections.OrderedDict(sorted(d.items(), key=lambda x:x[1]))
 

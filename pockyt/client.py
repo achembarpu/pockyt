@@ -173,7 +173,9 @@ class Client(object):
         """
         item_tags will be either: None, or OrderedDictionary
         """
-        return sorted(item_tags.keys()) if item_tags else []
+        keys = item_tags.keys() if item_tags else []
+        keys = [str(t) for t in keys]
+        return sorted(keys)
 
     def _put(self):
         payload = {
