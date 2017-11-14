@@ -9,15 +9,15 @@ class TestStringMethods(unittest.TestCase):
         self._client = Client(None, None)
 
     def test_returns_tags_as_sorted_list(self):
-        tags = self._client._displayTags(self.newTagDictionary())
+        tags = self._client._process_tags(self.newTagDictionary())
         self.assertEqual(tags, ['tag1', 'tag2', 'tag3'])
 
     def test_returns_empty_list_when_there_are_no_tags(self):
-        tags = self._client._displayTags(None)
+        tags = self._client._process_tags(None)
         self.assertEqual(tags, [])
 
     def test_returned_tags_are_all_ascii_strings(self):
-        tags = self._client._displayTags(self.newTagDictionary())
+        tags = self._client._process_tags(self.newTagDictionary())
 
         non_string_tags = [t for t in tags if not isinstance(t, str)]
         self.assertEqual(non_string_tags, [])

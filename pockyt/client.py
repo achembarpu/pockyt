@@ -166,10 +166,10 @@ class Client(object):
             'title': item.get('resolved_title'),
             'link': item.get('resolved_url'),
             'excerpt': item.get('excerpt'),
-            'tags': self._displayTags(item.get('tags')),
+            'tags': self._process_tags(item.get('tags')),
         } for item in items.values())
 
-    def _displayTags(self, item_tags):
+    def _process_tags(self, item_tags):
         """
         item_tags will be either: None, or OrderedDictionary
         """
