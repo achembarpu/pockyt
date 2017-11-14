@@ -125,6 +125,7 @@ class Client(object):
         payload = {
             'state': self._args.state,
             'sort': self._args.sort,
+            'detailType': 'complete'
         }
 
         if self._args.content != 'all':
@@ -165,8 +166,14 @@ class Client(object):
             'title': item.get('resolved_title'),
             'link': item.get('resolved_url'),
             'excerpt': item.get('excerpt'),
-            'tags': item.get('tags'),
+            'tags': self._process_tags(item.get('tags')),
         } for item in items.values())
+
+    def _process_tags(self, tags):
+        "Return list of tag strings for TAGS object from API."
+
+        if tags:
+            return tags.keys()
 
     def _put(self):
         payload = {
