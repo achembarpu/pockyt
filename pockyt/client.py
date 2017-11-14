@@ -125,6 +125,7 @@ class Client(object):
         payload = {
             'state': self._args.state,
             'sort': self._args.sort,
+            'detailType': 'complete',
         }
 
         if self._args.content != 'all':
@@ -165,8 +166,16 @@ class Client(object):
             'title': item.get('resolved_title'),
             'link': item.get('resolved_url'),
             'excerpt': item.get('excerpt'),
-            'tags': item.get('tags'),
+            'tags': self._process_tags(item.get('tags')),
         } for item in items.values())
+
+    def _process_tags(self, item_tags):
+        """
+        item_tags will be either: None, or OrderedDictionary
+        """
+        keys = item_tags.keys() if item_tags else []
+        keys = [str(t) for t in keys]
+        return sorted(keys)
 
     def _put(self):
         payload = {
