@@ -14,7 +14,7 @@ if sys.version_info[0:2] not in supported_versions:
 
 
 name = 'pockyt'
-version = '1.1'
+version = '1.2'
 motto = 'automate and manage your pocket collection'
 author = 'Arvind Chembarpu'
 email = 'achembarpu@gmail.com'
