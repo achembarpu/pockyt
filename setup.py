@@ -3,9 +3,12 @@ from __future__ import absolute_import, print_function, unicode_literals, with_s
 import sys
 from setuptools import setup, find_packages
 
-if sys.version_info[0:2] not in ((2, 7), (3, 4), (3, 5), (3, 6)):
-    print('This version of Python [%s] is unsupported !\n'
-          'Please use Python 2.7.x, 3.4.x, 3.5.x, or 3.6.x !'
+
+supported_versions = [(2, 7), (3, 4), (3, 5), (3, 6), (3, 7)]
+
+if sys.version_info[0:2] not in supported_versions:
+    print('This version of Python [%s] is unsupported!\n'
+          'Please use Python 2.7 or 3.4 - 3.7.'
           % ('.'.join(str(i) for i in sys.version_info[0:3])))
     sys.exit(1)
 
