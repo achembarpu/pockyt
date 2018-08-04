@@ -25,6 +25,11 @@ This commandline client interfaces the pocket API and provides a way to interact
 
 Using simple command sequences, routine tasks can be automated and reusable scripts can be created.
 
+Privacy
+-------
+
+`pockyt` does **NOT** track, store, or monitor your usage and/or data. Moreover, pockyt interacts with the pocket API using local credentials and does not attempt to communicate with any other services.
+
 Quick Start
 -----------
 
