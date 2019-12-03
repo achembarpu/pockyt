@@ -44,24 +44,29 @@ Examples
 --------
 
 * Get the latest 5 items' links & excerpts and save them to a file.
-  ::
-      pockyt get -n 5 -f '{link} - {excerpt}' -o readlater.txt
+    .. code::
+
+        pockyt get -n 5 -f '{link} - {excerpt}' -o readlater.txt
 
 * Get the oldest 10 items and delete them from Pocket.
-  ::
-      pockyt get -n 10 -r oldest -f '{id}' | pockyt mod -d -i redirect
+    .. code::
+
+        pockyt get -n 10 -r oldest -f '{id}' | pockyt mod -d -i redirect
 
 * Get all the items about 'python' and open them in a browser.
-  ::
-      pockyt get -q 'python' -o browser
+    .. code::
+
+        pockyt get -q 'python' -o browser
 
 * Get all the links from a 'links.txt' and add them to Pocket.
-  ::
-      pockyt put -i links.txt
+    .. code::
+
+        pockyt put -i links.txt
 
 * Get all favorited items and archive them.
-  ::
-      pockyt get -v 1 | pockyt mod -a 1 -i redirect
+    .. code::
+
+        pockyt get -v 1 | pockyt mod -a 1 -i redirect
 
 
 Documentation
@@ -69,7 +74,6 @@ Documentation
 
 **pockyt -h** :
 
-    -h, --help         show this help message and exit
     reg
         connect a pocket account
     get
@@ -81,7 +85,8 @@ Documentation
 
 **pockyt get -h** :
 
-  -h, --help            show this help message and exit
+  -h, --help
+                        show this help message and exit
   -c <type>, --content <type>
                         content type : <type> : {all, [article, video, image]}
   -s <state>, --state <state>
@@ -142,17 +147,17 @@ Feel free to contribute features, bugfixes, improvements, and usage ideas.
 
 `Fork <https://github.com/arvindch/pockyt/fork>`_ pockyt.
 Work on the source code.
-::
-    git clone git@github.com:<username>/pockyt.git
-    cd pockyt
-    pip install -e .
-    git checkout -b new-feature
-    ...
-    # do stuff
-    ...
-    git add .
-    git commit -am 'commit msg'
-    git push origin new-feature
+.. code::
+git clone git@github.com:<username>/pockyt.git
+cd pockyt
+pip install -e .
+git checkout -b new-feature
+...
+# do stuff
+...
+git add .
+git commit -am 'commit msg'
+git push origin new-feature
 
 Then, submit a `pull request <https://github.com/arvindch/pockyt/compare>`_.
 

@@ -33,6 +33,7 @@ setup(
     version=version,
     description=motto,
     long_description=description,
+    long_description_content_type='text/x-rst',
     author=author,
     author_email=email,
     url=github,
