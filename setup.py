@@ -4,17 +4,18 @@ import sys
 from setuptools import setup, find_packages
 
 
-supported_versions = [(2, 7), (3, 4), (3, 5), (3, 6), (3, 7), (3, 8)]
-
-if sys.version_info[0:2] not in supported_versions:
-    print('This version of Python [%s] is unsupported!\n'
-          'Please use Python 2.7 or 3.4 - 3.8.'
-          % ('.'.join(str(i) for i in sys.version_info[0:3])))
-    sys.exit(1)
+supported_versions = [(2, 7), (3, 4)]
+[major, minor] = sys.version_info[0:2]
+for [supported_major, supported_minor] in supported_versions:
+    if major == supported_major and minor < supported_minor:
+        print('Python [%s] is unsupported!\n'
+              'Please use Python 2.7+ or 3.4+'
+              % ('.'.join(str(i) for i in sys.version_info[0:3])))
+        sys.exit(1)
 
 
 name = 'pockyt'
-version = '1.2'
+version = '1.3'
 motto = 'automate and manage your pocket collection'
 author = 'Arvind Chembarpu'
 email = 'achembarpu@gmail.com'
@@ -50,11 +51,8 @@ setup(
         'Natural Language :: English',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3'
     ],
     entry_points={
         'console_scripts': [
