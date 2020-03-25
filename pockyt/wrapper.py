@@ -6,48 +6,54 @@ import sys
 import traceback
 import webbrowser
 from collections import OrderedDict
-try:
+
+try:  # py2
     import urlparse
 except ImportError:
     import urllib.parse as urlparse
+
 try:
     from urllib.request import urlopen, Request
-except ImportError:
+except ImportError:  # py2
     from urllib2 import urlopen, Request
 
 from .api import API
 
 
-def print_bug_report(message=''):
+def print_bug_report(message=""):
     """
     Prints a usable bug report
     """
 
-    separator = '\n' + ('-' * 69) + '\n'
+    separator = "\n" + ("-" * 69) + "\n"
 
     python_version = str(sys.version_info[:3])
-    arguments = '\n'.join(arg for arg in sys.argv[1:])
+    arguments = "\n".join(arg for arg in sys.argv[1:])
 
     try:
         import pip
     except ImportError:
-        packages = '`pip` is not installed !'
+        packages = "`pip` is not installed !"
     else:
-        packages = '\n'.join(
-            '{0} - {1}'.format(package.key, package.version)
+        packages = "\n".join(
+            "{0} - {1}".format(package.key, package.version)
             for package in pip.get_installed_distributions()
         )
 
     print(
-        '```{0}Bug Report :\n'
-        '`pockyt` has encountered an error ! '
-        'Please submit this bug report at \n` {1} `.{0}'
-        'Python Version : {2}{0}'
-        'Installed Packages :\n{3}{0}'
-        'Runtime Arguments :\n{4}{0}'
-        'Error Message :\n{5}{0}```'.format(
-            separator, API.ISSUE_URL, python_version,
-            packages, arguments, message or traceback.format_exc().strip()
+        "```{0}Bug Report :\n"
+        "`pockyt` has encountered an error ! "
+        "Please submit this bug report at \n` {1} `.{0}"
+        "Python Version : {2}{0}"
+        "Installed Packages :\n{3}{0}"
+        "Runtime Arguments :\n{4}{0}"
+        "Error Message :\n{5}{0}```".format(
+            separator,
+            API.ISSUE_URL,
+            python_version,
+            packages,
+            arguments,
+            message or traceback.format_exc().strip(),
         )
     )
 
@@ -63,7 +69,7 @@ class SuppressedStdout(object):
         self.devnull = None
 
     def __enter__(self):
-        self.devnull = open(os.devnull, 'w')
+        self.devnull = open(os.devnull, "w")
         os.dup2(self.devnull.fileno(), self.orig_stdout)
 
     def __exit__(self, *args):
@@ -81,7 +87,7 @@ class Response(object):
 
         self.code = self._get_code()
         self.info = response.info()
-        self.encoding = self.get_param('charset') or API.ENCODING
+        self.encoding = self.get_param("charset") or API.ENCODING
         self.text = response.read().decode(self.encoding)
         self.data = self._get_data()
 
@@ -94,10 +100,7 @@ class Response(object):
 
     def _get_data(self):
         try:
-            data = json.loads(
-                self.text,
-                object_pairs_hook=OrderedDict,
-            )
+            data = json.loads(self.text, object_pairs_hook=OrderedDict,)
         except ValueError:
             data = {}
         return data
@@ -129,17 +132,18 @@ class Network(object):
     def post_request(link, payload):
         request_data = json.dumps(payload).encode(API.ENCODING)
         headers = {
-            'Content-Type': API.CONTENT_TYPE,
-            'Content-Length': len(request_data)
+            "Content-Type": API.CONTENT_TYPE,
+            "Content-Length": len(request_data),
         }
         request = Request(link, request_data, headers)
         response = Response(urlopen(request))
 
         if response.code != 200:
-            print_bug_report('API Error {0} ! : {1}'.format(
-                response.get_header('X-Error-Code'),
-                response.get_header('X-Error'),
-            ))
+            print_bug_report(
+                "API Error {0} ! : {1}".format(
+                    response.get_header("X-Error-Code"), response.get_header("X-Error"),
+                )
+            )
             sys.exit(1)
         else:
             return response
@@ -154,9 +158,7 @@ class Browser(object):
     def open(link, new=0, autoraise=True):
         with SuppressedStdout():
             webbrowser.open(
-                url=link,
-                new=new,
-                autoraise=autoraise,
+                url=link, new=new, autoraise=autoraise,
             )
 
     @classmethod
