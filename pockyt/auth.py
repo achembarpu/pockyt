@@ -76,7 +76,7 @@ class Authenticator(object):
         self._access_token = qs["access_token"][0]
         self._username = qs["username"][0]
 
-    def _setup(self):
+    def setup(self):
         print(
             "Note: During the registration process, pockyt will attempt to "
             "open the required links in your default browser. "
@@ -92,7 +92,7 @@ class Authenticator(object):
             "Press Enter when done...".format(create_link)
         )
 
-        self._consumer_key = input("Step 2:\nEnter your Consumer Key: ")
+        self._consumer_key = input("Step 2:\nEnter your Consumer Key: ").strip()
 
         self._obtain_request_token()
 
@@ -115,7 +115,7 @@ class Authenticator(object):
             )
         )
 
-    def _load(self):
+    def load(self):
         self._load_config()
         try:
             self._consumer_key = self._config.get(API.CONFIG_HEADER, "consumer_key")
@@ -124,11 +124,3 @@ class Authenticator(object):
         except (configparser.NoSectionError, KeyError):
             print("Please connect an account first, by running `pockyt reg` !")
             sys.exit(1)
-
-    def run(self):
-        if self._args.do == "reg":
-            self._setup()
-            sys.exit(0)
-        else:
-            self._load()
-            return

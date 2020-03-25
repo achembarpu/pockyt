@@ -173,29 +173,31 @@ class Pockyt(object):
 
     def run(self):
         if not self._args.do:
-            # print usage help
             self.parser.print_help()
-            sys.exit(1)
+            return
 
-        # setup authentication
         auth = Authenticator(self._args)
-        auth.run()
 
-        # start pocket interaction
+        if self._args.do == "reg":
+            auth.setup()
+            return
+
+        auth.load()
+
         pocket = Client(auth.credentials, self._args)
         pocket.run()
 
 
 def main():
+    error = 0
     try:
-        error = 0
         app = Pockyt()
-        app.run()
+        error = app.run()
     except KeyboardInterrupt:
         pass
     except Exception:
-        print_bug_report()
         error = 1
+        print_bug_report()
     sys.exit(error)
 
 

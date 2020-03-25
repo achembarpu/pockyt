@@ -173,8 +173,6 @@ class Client(object):
         )
 
     def _process_tags(self, tags):
-        "Return list of tag strings for TAGS object from API."
-
         if tags:
             return tags.keys()
 
