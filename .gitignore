@@ -19,3 +19,7 @@ parts/
 sdist/
 var/
 *.egg-info/
+
+# Environment
+Pipfile.lock
+.vscode/
