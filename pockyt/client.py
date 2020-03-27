@@ -1,16 +1,12 @@
 from __future__ import absolute_import, print_function, unicode_literals, with_statement
 
-try:  # py2
-    input = raw_input
-except NameError:
-    pass
-
 import sys
 import time
 
 import parse
 
 from .api import API
+from .compat import prompt
 from .wrapper import Browser, Network
 
 
@@ -68,7 +64,7 @@ class Client(object):
         print("Enter data: {0}".format(self._args.format.strip()))
         try:
             while True:
-                data = input().strip()
+                data = prompt().strip()
                 if data:
                     info = self._unformat_spec.parse(data)
                     self._input.append(info)

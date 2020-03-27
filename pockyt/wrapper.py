@@ -7,17 +7,8 @@ import traceback
 import webbrowser
 from collections import OrderedDict
 
-try:  # py2
-    import urlparse
-except ImportError:
-    import urllib.parse as urlparse
-
-try:
-    from urllib.request import urlopen, Request
-except ImportError:  # py2
-    from urllib2 import urlopen, Request
-
 from .api import API
+from .compat import urlparse, urlopen, Request, save_webpage
 
 
 def print_bug_report(message=""):
@@ -101,7 +92,7 @@ class Response(object):
 
     def _get_data(self):
         try:
-            data = json.loads(self.text, object_pairs_hook=OrderedDict,)
+            data = json.loads(self.text, object_pairs_hook=OrderedDict)
         except ValueError:
             data = {}
         return data
@@ -120,8 +111,8 @@ class Response(object):
             value = self.info.getparam(key)
         return value
 
-    def get_qs(self):
-        return urlparse.parse_qs(self.text)
+    def get_query(self):
+        return urlparse.parse_query(self.text)
 
 
 class Network(object):

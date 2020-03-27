@@ -1,19 +1,10 @@
 from __future__ import absolute_import, print_function, unicode_literals, with_statement
 
-try:  # py2
-    input = raw_input
-except NameError:
-    pass
-
-try:  # py2
-    import ConfigParser as configparser
-except ImportError:
-    import configparser
-
 import os
 import sys
 
 from .api import API
+from .compat import prompt, configparser
 from .wrapper import Browser, Network
 
 
@@ -61,9 +52,9 @@ class Authenticator(object):
             "redirect_uri": API.REDIRECT_URL,
         }
         response = Network.post_request(API.REQUEST_TOKEN_URL, payload)
-        qs = response.get_qs()
+        query = response.get_query()
 
-        self._request_token = qs["code"][0]
+        self._request_token = query["code"][0]
 
     def _obtain_access_token(self):
         payload = {
@@ -71,10 +62,10 @@ class Authenticator(object):
             "code": self._request_token,
         }
         response = Network.post_request(API.ACCESS_TOKEN_URL, payload)
-        qs = response.get_qs()
+        query = response.get_query()
 
-        self._access_token = qs["access_token"][0]
-        self._username = qs["username"][0]
+        self._access_token = query["access_token"][0]
+        self._username = query["username"][0]
 
     def setup(self):
         print(
@@ -87,12 +78,12 @@ class Authenticator(object):
 
         Browser.open_new_tab(create_link)
 
-        input(
+        prompt(
             "Step 1:\nCreate an application, via this link :\n` {0} `\n"
             "Press Enter when done...".format(create_link)
         )
 
-        self._consumer_key = input("Step 2:\nEnter your Consumer Key: ").strip()
+        self._consumer_key = prompt("Step 2:\nEnter your Consumer Key: ").strip()
 
         self._obtain_request_token()
 
@@ -100,7 +91,7 @@ class Authenticator(object):
 
         Browser.open_new_tab(auth_link)
 
-        input(
+        prompt(
             "Step 3:\nConnect an account, via this link :\n` {0} `\n"
             "Press Enter when done...".format(auth_link)
         )
