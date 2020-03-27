@@ -2,7 +2,7 @@
 pockyt
 ======
 
-A simple yet powerful commandline client for your `Pocket <https://getpocket.com/>`_ collection.
+A simple, yet powerful, commandline client for your `Pocket <https://getpocket.com/>`_ collection.
 
 .. image:: http://img.shields.io/pypi/v/pockyt.svg?style=flat
     :target: https://pypi.python.org/pypi/pockyt
@@ -21,13 +21,13 @@ About
 
 `Pocket <https://getpocket.com/>`_ is an application for managing a reading list of articles from the Internet.
 
-pockyt is a commandline client interfaces the pocket API and provides a way to interact with your Pocket collection.
+**pockyt** is a commandline client that interfaces the pocket API and provides a way to interact with your Pocket collection.
 Using simple command sequences, routine tasks can be automated and reusable scripts can be created.
 
 Privacy
 -------
 
-`pockyt` does **NOT** track, store, or monitor your usage and/or data.
+**pockyt** does **NOT** track, store, or monitor your usage and/or data.
 Moreover, pockyt interacts with the pocket API using local credentials and does not attempt to communicate with any other services.
 
 Installation
@@ -35,9 +35,9 @@ Installation
 
 **pockyt** supports Python 2.7+ & 3.4+ on Windows, macOS, & GNU/Linux platforms.
 
-1. Install pockyt: ``pip install -U pockyt``
-2. Connect Pocket account: ``pockyt reg``
-4. Refer the Examples & Documentation below.
+1. Install pockyt: `pip install -U pockyt`
+2. Connect Pocket account: `pockyt reg`
+3. Refer the Examples & Documentation below.
 
 Examples
 --------
@@ -110,16 +110,18 @@ This project uses the `GNU GPLv3 License <https://github.com/arvindch/pockyt/blo
 Documentation
 -------------
 
-**pockyt -h** :
+**pockyt help/-h/--help** :
 
+    help
+        show pockyt usage help
     reg
         connect a pocket account
     get
-        get pocket collection, with useful item_info
+        get pocket collection, with useful item info
     put
         add to pocket collection, using links
     mod
-        modify pocket collection, using item_ids
+        modify pocket collection, using item ids
 
 **pockyt get -h** :
 
@@ -150,6 +152,8 @@ Documentation
   -o <option>, --output <option>
                         redirect output : <option> : {None, [browser,
                         filename]}
+  -a <path>, --archive <path>
+                        save offline copies : <path> : path/to/archive/folder
 
 **pockyt put -h** :
 

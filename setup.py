@@ -13,8 +13,8 @@ for [supported_major, supported_minor] in supported_versions:
         sys.exit(1)
 
 name = "pockyt"
-version = "1.3.1"
-motto = "A simple yet powerful commandline client for your Pocket collection."
+version = "1.4.0"
+motto = "A simple, yet powerful, commandline client for your Pocket collection."
 author = "Arvind Chembarpu"
 email = "achembarpu@gmail.com"
 github = "https://github.com/arvindch/%s" % (name)
