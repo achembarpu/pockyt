@@ -2,7 +2,7 @@
 pockyt
 ======
 
-A usable, customizable commandline client to automate and manage your pocket collection.
+A simple yet powerful commandline client for your `Pocket <https://getpocket.com/>`_ collection.
 
 .. image:: http://img.shields.io/pypi/v/pockyt.svg?style=flat
     :target: https://pypi.python.org/pypi/pockyt
@@ -13,32 +13,36 @@ A usable, customizable commandline client to automate and manage your pocket col
 Links
 -----
 
-* `PyPi <https://pypi.python.org/pypi/pockyt>`_
-* `GitHub <https://github.com/arvindch/pockyt>`_
+* `PyPi package <https://pypi.python.org/pypi/pockyt>`_
+* `GitHub repository <https://github.com/arvindch/pockyt>`_
 
 About
 -----
 
 `Pocket <https://getpocket.com/>`_ is an application for managing a reading list of articles from the Internet.
 
-This commandline client interfaces the pocket API and provides a way to interact with your pocket collection.
-
+pockyt is a commandline client interfaces the pocket API and provides a way to interact with your Pocket collection.
 Using simple command sequences, routine tasks can be automated and reusable scripts can be created.
 
 Privacy
 -------
 
-`pockyt` does **NOT** track, store, or monitor your usage and/or data. Moreover, pockyt interacts with the pocket API using local credentials and does not attempt to communicate with any other services.
+`pockyt` does **NOT** track, store, or monitor your usage and/or data.
+Moreover, pockyt interacts with the pocket API using local credentials and does not attempt to communicate with any other services.
 
-Quick Start
------------
+Installation
+------------
 
-``pockyt`` supports Python ``2.7+`` and ``3.4+`` on ``Windows``, ``macOS``, & ``GNU/Linux`` platforms.
+**pockyt** supports Python 2.7+ & 3.4+ on Windows, macOS, & GNU/Linux platforms.
 
-1. ``pip install pockyt --upgrade``
-2. ``pockyt reg``
-3. Follow the prompts to connect your pocket account to pockyt.
-4. Refer the Documentation and Examples for usage info and ideas.
+1. standard install: ``pip install -U pockyt``
+2. extra features: ``pip install -U pockyt[archive]`` :
+
+    * `archive`: Save offline versions of webpages
+
+3. ``pockyt reg``
+4. Follow the prompts to connect your Pocket account to pockyt.
+5. Refer the Documentation and Examples for usage info and ideas.
 
 Examples
 --------
@@ -73,6 +77,34 @@ Examples
 
         pockyt get -v 1 | pockyt mod -a 1 -i redirect
 
+Contribute
+----------
+
+Feel free to contribute features, bugfixes, improvements, and usage ideas.
+
+1. `Fork <https://github.com/arvindch/pockyt/fork>`_ pockyt.
+
+2. Work on the source code.
+
+    .. code::
+
+        git clone git@github.com:<username>/pockyt.git
+        cd pockyt
+        pip install -e .
+        git checkout -b new-feature
+        ...
+        # do stuff
+        ...
+        git add .
+        git commit -am 'commit msg'
+        git push origin new-feature
+
+3. Submit a `pull request <https://github.com/arvindch/pockyt/compare>`_.
+
+License
+-------
+
+This project uses the `GNU GPLv3 License <https://github.com/arvindch/pockyt/blob/master/LICENSE.txt>`_.
 
 Documentation
 -------------
@@ -144,32 +176,3 @@ Documentation
   -v <option>, --favorite <option>
                         favorite items : <option> : {-1: None, [1: favorite,
                         0: unfavorite]}
-
-Contribute
-----------
-
-Feel free to contribute features, bugfixes, improvements, and usage ideas.
-
-1. `Fork <https://github.com/arvindch/pockyt/fork>`_ pockyt.
-
-2. Work on the source code.
-
-    .. code::
-
-        git clone git@github.com:<username>/pockyt.git
-        cd pockyt
-        pip install -e .
-        git checkout -b new-feature
-        ...
-        # do stuff
-        ...
-        git add .
-        git commit -am 'commit msg'
-        git push origin new-feature
-
-3. Submit a `pull request <https://github.com/arvindch/pockyt/compare>`_.
-
-License
--------
-
-This project uses the `GNU GPLv3 License <https://github.com/arvindch/pockyt/blob/master/LICENSE.txt>`_.
