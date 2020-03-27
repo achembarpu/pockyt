@@ -29,32 +29,28 @@ def print_bug_report(message=""):
     else:
         packages_message = "\n".join(
             "{0} - {1}".format(package.key, package.version)
-            for package in pkg_resources.working_set
-        )
+            for package in pkg_resources.working_set)
 
-    print(
-        "{0}Bug Report :\n"
-        "`pockyt` has encountered an error! "
-        "Please submit this bug report at \n` {1} `.{0}"
-        "Python Version:\n{2}{0}"
-        "Installed Packages:\n{3}{0}"
-        "Commmand:\n{4}{0}"
-        "Error Message:\n{5}{0}".format(
-            separator,
-            API.ISSUE_URL,
-            python_version,
-            packages_message,
-            command,
-            error_message,
-        )
-    )
+    print("{0}Bug Report :\n"
+          "`pockyt` has encountered an error! "
+          "Please submit this bug report at \n` {1} `.{0}"
+          "Python Version:\n{2}{0}"
+          "Installed Packages:\n{3}{0}"
+          "Commmand:\n{4}{0}"
+          "Error Message:\n{5}{0}".format(
+              separator,
+              API.ISSUE_URL,
+              python_version,
+              packages_message,
+              command,
+              error_message,
+          ))
 
 
 class SuppressedStdout(object):
     """
     Suppresses STDOUT, utilize with the `with` keyword
     """
-
     def __init__(self):
         self.orig_stdout = sys.stdout.fileno()
         self.copy_stdout = os.dup(self.orig_stdout)
@@ -73,7 +69,6 @@ class Response(object):
     """
     Wraps a urllib request to provide a common python 2/3 API
     """
-
     def __init__(self, response):
         self._response = response
 
@@ -119,7 +114,6 @@ class Network(object):
     """
     Safe POST Request, with error-handling
     """
-
     @staticmethod
     def post_request(link, payload):
         request_data = json.dumps(payload).encode(API.ENCODING)
@@ -131,11 +125,10 @@ class Network(object):
         response = Response(urlopen(request))
 
         if response.code != 200:
-            print_bug_report(
-                "API Error {0} ! : {1}".format(
-                    response.get_header("X-Error-Code"), response.get_header("X-Error"),
-                )
-            )
+            print_bug_report("API Error {0} ! : {1}".format(
+                response.get_header("X-Error-Code"),
+                response.get_header("X-Error"),
+            ))
             sys.exit(1)
         else:
             return response
@@ -145,12 +138,13 @@ class Browser(object):
     """
     Silently open browser windows/tabs
     """
-
     @staticmethod
     def open(link, new=0, autoraise=True):
         with SuppressedStdout():
             webbrowser.open(
-                url=link, new=new, autoraise=autoraise,
+                url=link,
+                new=new,
+                autoraise=autoraise,
             )
 
     @classmethod

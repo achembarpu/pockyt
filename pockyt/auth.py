@@ -12,7 +12,6 @@ class Authenticator(object):
     """
     Pocket API Access Authenticator
     """
-
     def __init__(self, args):
         self._args = args
         self._config = None
@@ -22,7 +21,8 @@ class Authenticator(object):
         self._username = None
 
         self._config_path = os.path.join(
-            os.path.expanduser("~"), ".{0}".format(API.APP_NAME),
+            os.path.expanduser("~"),
+            ".{0}".format(API.APP_NAME),
         )
 
     @property
@@ -68,22 +68,19 @@ class Authenticator(object):
         self._username = query["username"][0]
 
     def setup(self):
-        print(
-            "Note: During the registration process, pockyt will attempt to "
-            "open the required links in your default browser. "
-            "If any errors occur, you can use the printed links instead.\n"
-        )
+        print("Note: During the registration process, pockyt will attempt to "
+              "open the required links in your default browser. "
+              "If any errors occur, you can use the printed links instead.\n")
 
         create_link = API.APP_CREATE_URL
 
         Browser.open_new_tab(create_link)
 
-        prompt(
-            "Step 1:\nCreate an application, via this link :\n` {0} `\n"
-            "Press Enter when done...".format(create_link)
-        )
+        prompt("Step 1:\nCreate an application, via this link :\n` {0} `\n"
+               "Press Enter when done...".format(create_link))
 
-        self._consumer_key = prompt("Step 2:\nEnter your Consumer Key: ").strip()
+        self._consumer_key = prompt(
+            "Step 2:\nEnter your Consumer Key: ").strip()
 
         self._obtain_request_token()
 
@@ -91,26 +88,23 @@ class Authenticator(object):
 
         Browser.open_new_tab(auth_link)
 
-        prompt(
-            "Step 3:\nConnect an account, via this link :\n` {0} `\n"
-            "Press Enter when done...".format(auth_link)
-        )
+        prompt("Step 3:\nConnect an account, via this link :\n` {0} `\n"
+               "Press Enter when done...".format(auth_link))
 
         self._obtain_access_token()
 
         self._save_config()
 
-        print(
-            "Welcome {0} !\n{1} is now ready for usage !".format(
-                self._username, API.APP_NAME
-            )
-        )
+        print("Welcome {0} !\n{1} is now ready for usage !".format(
+            self._username, API.APP_NAME))
 
     def load(self):
         self._load_config()
         try:
-            self._consumer_key = self._config.get(API.CONFIG_HEADER, "consumer_key")
-            self._access_token = self._config.get(API.CONFIG_HEADER, "access_token")
+            self._consumer_key = self._config.get(API.CONFIG_HEADER,
+                                                  "consumer_key")
+            self._access_token = self._config.get(API.CONFIG_HEADER,
+                                                  "access_token")
             self._username = self._config.get(API.CONFIG_HEADER, "username")
         except (configparser.NoSectionError, KeyError):
             print("Please connect an account first, by running `pockyt reg` !")

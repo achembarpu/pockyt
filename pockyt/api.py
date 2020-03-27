@@ -32,7 +32,5 @@ class API(object):
 
     @classmethod
     def get_auth_user_url(cls, rt):
-        return (
-            cls.POCKET_URL + "/auth/authorize?request_token={0}"
-            "&redirect_uri={1}".format(rt, cls.REDIRECT_URL)
-        )
+        return (cls.POCKET_URL + "/auth/authorize?request_token={0}"
+                "&redirect_uri={1}".format(rt, cls.REDIRECT_URL))

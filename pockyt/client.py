@@ -6,15 +6,14 @@ import time
 import parse
 
 from .api import API
-from .compat import prompt
-from .wrapper import Browser, Network
+from .compat import prompt, resolve_path
+from .wrapper import Browser, Network, save_webpage
 
 
 class Client(object):
     """
     Pocket API Access Client
     """
-
     def __init__(self, credentials, args):
         self._args = args
         self._credentials = credentials
@@ -32,10 +31,11 @@ class Client(object):
         self._payload.update(self._credentials)
 
         # access API
-        self._response = Network.post_request(self._api_endpoint, self._payload)
+        self._response = Network.post_request(self._api_endpoint,
+                                              self._payload)
 
     def _output_to_file(self):
-        with open(self._args.output, "w+") as outfile:
+        with open(resolve_path(self._args.output), "w+") as outfile:
             for info in self._output:
                 line = self._format_spec.format(**info)
                 try:
@@ -59,6 +59,12 @@ class Client(object):
             # pace new tabs
             time.sleep(1)
             Browser.open_new_tab(info["link"])
+
+    def _save_to_archive(self):
+        archive_path = resolve_path(self._args.archive)
+        print("Saving offline copies: {0}".format(archive_path))
+        for info in self._output[1:]:
+            print(info["link"])
 
     def _get_console_input(self):
         print("Enter data: {0}".format(self._args.format.strip()))
@@ -99,9 +105,8 @@ class Client(object):
     def _validate_format(self):
         # interpret escape sequences
         try:
-            self._args.format = bytes(self._args.format, API.ENCODING).decode(
-                API.DECODING
-            )
+            self._args.format = bytes(self._args.format,
+                                      API.ENCODING).decode(API.DECODING)
         except TypeError:
             self._args.format = self._args.format.decode(API.DECODING)
 
@@ -157,16 +162,13 @@ class Client(object):
             print("No items found !")
             sys.exit(0)
 
-        self._output = tuple(
-            {
-                "id": item.get("item_id"),
-                "title": item.get("resolved_title"),
-                "link": item.get("resolved_url"),
-                "excerpt": item.get("excerpt"),
-                "tags": self._process_tags(item.get("tags")),
-            }
-            for item in items.values()
-        )
+        self._output = tuple({
+            "id": item.get("item_id"),
+            "title": item.get("resolved_title"),
+            "link": item.get("resolved_url"),
+            "excerpt": item.get("excerpt"),
+            "tags": self._process_tags(item.get("tags")),
+        } for item in items.values())
 
     def _process_tags(self, tags):
         if tags:
@@ -174,9 +176,11 @@ class Client(object):
 
     def _put(self):
         payload = {
-            "actions": tuple(
-                {"action": "add", "url": info["link"],} for info in self._input
-            )
+            "actions":
+            tuple({
+                "action": "add",
+                "url": info["link"],
+            } for info in self._input)
         }
 
         self._payload = payload
@@ -201,9 +205,11 @@ class Client(object):
             action = ""
 
         payload = {
-            "actions": tuple(
-                {"action": action, "item_id": info["id"],} for info in self._input
-            ),
+            "actions":
+            tuple({
+                "action": action,
+                "item_id": info["id"],
+            } for info in self._input),
         }
 
         self._payload = payload
@@ -218,6 +224,12 @@ class Client(object):
 
         if self._args.do == "get":
             self._get()
+
+            if self._args.archive:
+                if save_webpage is None:
+                    raise RuntimeError("`pywebcopy` is not installed!")
+                self._save_to_archive()
+                return
 
             # print output
             self._print_to_console()

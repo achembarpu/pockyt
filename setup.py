@@ -3,18 +3,14 @@ from __future__ import absolute_import, print_function, unicode_literals, with_s
 import sys
 from setuptools import setup, find_packages
 
-
 supported_versions = [(2, 7), (3, 4)]
 [major, minor] = sys.version_info[0:2]
 for [supported_major, supported_minor] in supported_versions:
     if major == supported_major and minor < supported_minor:
-        print(
-            "Python [%s] is unsupported!\n"
-            "Please use Python 2.7+ or 3.4+"
-            % (".".join(str(i) for i in sys.version_info[0:3]))
-        )
+        print("Python [%s] is unsupported!\n"
+              "Please use Python 2.7+ or 3.4+" %
+              (".".join(str(i) for i in sys.version_info[0:3])))
         sys.exit(1)
-
 
 name = "pockyt"
 version = "1.3.1"
@@ -40,8 +36,12 @@ setup(
     author_email=email,
     url=github,
     license="GPLv3+",
-    install_requires=["parse==1.15.0",],
-    extras_require={"archive": ["pywebcopy==6.2.0"],},
+    install_requires=[
+        "parse==1.15.0",
+    ],
+    extras_require={
+        "archive": ["pywebcopy==6.2.0"],
+    },
     download_url="%s/tarball/%s" % (github, version),
     keywords=["pocket", "commandline", "automation"],
     classifiers=[
@@ -56,5 +56,9 @@ setup(
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
     ],
-    entry_points={"console_scripts": ["pockyt=pockyt.pockyt:main",],},
+    entry_points={
+        "console_scripts": [
+            "pockyt=pockyt.pockyt:main",
+        ],
+    },
 )

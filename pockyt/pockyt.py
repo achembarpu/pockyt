@@ -13,7 +13,6 @@ class Pockyt(object):
     """
     pockyt - Pocket Commandline Client
     """
-
     def __init__(self):
         self._setup_parsers()
         self._args = self.parser.parse_args()
@@ -35,7 +34,8 @@ class Pockyt(object):
 
         # get items from collection
         get_parser = subparsers.add_parser(
-            "get", help="get pocket collection, with useful item info",
+            "get",
+            help="get pocket collection, with useful item info",
         )
         get_parser.add_argument(
             "-c",
@@ -70,7 +70,10 @@ class Pockyt(object):
             help="number of items : <amount> : {-1: all, [n: amount]}",
         )
         get_parser.add_argument(
-            "-q", "--query", metavar="<query>", help="search query : <query> : {None}",
+            "-q",
+            "--query",
+            metavar="<query>",
+            help="search query : <query> : {None}",
         )
         get_parser.add_argument(
             "-t",
@@ -78,7 +81,8 @@ class Pockyt(object):
             metavar="<option>",
             default="-1",
             type=str,
-            help="filter tag : {-1: nofilter, " "[tagname: tagged, 0: untagged}",
+            help="filter tag : {-1: nofilter, "
+            "[tagname: tagged, 0: untagged}",
         )
         get_parser.add_argument(
             "-v",
@@ -110,10 +114,17 @@ class Pockyt(object):
             metavar="<option>",
             help="redirect output : <option> : {None, [browser, filename]}",
         )
+        get_parser.add_argument(
+            "-a",
+            "--archive",
+            metavar="<path>",
+            help="save offline copies : <path> : path/to/archive/folder",
+        )
 
         # add items to collection
         put_parser = subparsers.add_parser(
-            "put", help="add to pocket collection, using links",
+            "put",
+            help="add to pocket collection, using links",
         )
         put_parser.add_argument(
             "-f",
@@ -128,12 +139,14 @@ class Pockyt(object):
             "--input",
             default="console",
             metavar="<option>",
-            help="obtain input : <option> : {console, [redirect, link, filename]}",
+            help=
+            "obtain input : <option> : {console, [redirect, link, filename]}",
         )
 
         # modify items in collection
         mod_parser = subparsers.add_parser(
-            "mod", help="modify pocket collection, using item ids",
+            "mod",
+            help="modify pocket collection, using item ids",
         )
         mod_parser.add_argument(
             "-f",
@@ -152,7 +165,10 @@ class Pockyt(object):
         )
         options = mod_parser.add_mutually_exclusive_group(required=True)
         options.add_argument(
-            "-d", "--delete", action="store_true", help="delete items",
+            "-d",
+            "--delete",
+            action="store_true",
+            help="delete items",
         )
         options.add_argument(
             "-a",
@@ -161,7 +177,8 @@ class Pockyt(object):
             metavar="<option>",
             choices=[-1, 0, 1],
             type=int,
-            help="archive items : <option> : {-1: None, [1: archive, 0: unarchive]}",
+            help=
+            "archive items : <option> : {-1: None, [1: archive, 0: unarchive]}",
         )
         options.add_argument(
             "-v",
@@ -170,7 +187,8 @@ class Pockyt(object):
             metavar="<option>",
             choices=[-1, 0, 1],
             type=int,
-            help="favorite items : <option> : {-1: None, [1: favorite, 0: unfavorite]}",
+            help=
+            "favorite items : <option> : {-1: None, [1: favorite, 0: unfavorite]}",
         )
 
     def run(self):
