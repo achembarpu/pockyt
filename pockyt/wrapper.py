@@ -7,10 +7,10 @@ import sys
 import traceback
 import webbrowser
 from collections import OrderedDict
-from os.path import join, realpath
+from os.path import exists, join, realpath
 
 from .api import API
-from .compat import urlparse, urlopen, Request, save_webpage
+from .compat import urlparse, urlopen, Request
 
 
 def print_bug_report(message=""):
@@ -109,21 +109,28 @@ class Response(object):
         return value
 
     def get_query(self):
-        return urlparse.parse_query(self.text)
+        return urlparse.parse_qs(self.text)
+
+    def get_text(self):
+        return self.text
 
 
 class Network(object):
     """
     Safe POST Request, with error-handling
     """
-    @staticmethod
-    def post_request(link, payload):
+    USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 " \
+        + "(KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"  # Chrome UA
+
+    @classmethod
+    def post_request(cls, link, payload):
         request_data = json.dumps(payload).encode(API.ENCODING)
         headers = {
             "Content-Type": API.CONTENT_TYPE,
             "Content-Length": len(request_data),
+            'User-Agent': cls.USER_AGENT
         }
-        request = Request(link, request_data, headers)
+        request = Request(link, data=request_data, headers=headers)
         response = Response(urlopen(request))
 
         if response.code != 200:
@@ -134,6 +141,12 @@ class Network(object):
             sys.exit(1)
         else:
             return response
+
+    @classmethod
+    def get_html(cls, link):
+        headers = {'User-Agent': cls.USER_AGENT}
+        response = Response(urlopen(Request(link, headers=headers)))
+        return response.get_text()
 
 
 class Browser(object):
@@ -165,18 +178,22 @@ class FileSystem(object):
     CLEAN_CHARS = re.compile('[^\w\-_\. ]')
 
     @classmethod
-    def resolve_path(cls, path):
+    def get_safe_name(cls, name):
+        return cls.CLEAN_CHARS.sub('_', name)
+
+    @staticmethod
+    def resolve_path(path):
         return realpath(path)
 
-    @classmethod
-    def get_safe_path(cls, path, name):
-        return join(path, cls.CLEAN_CHARS.sub('_', name))
+    @staticmethod
+    def ensure_dir(dirpath):
+        if not exists(dirpath):
+            os.makedirs(dirpath)
 
-    @classmethod
-    def write_to_file(cls, file, lines):
+    @staticmethod
+    def write_to_file(file, content):
         with open(realpath(file), "w+") as outfile:
-            for line in lines:
-                try:
-                    outfile.write(line)
-                except UnicodeEncodeError:
-                    outfile.write(line.encode(API.ENCODING))
+            try:
+                outfile.write(content)
+            except UnicodeEncodeError:
+                outfile.write(content.encode(API.ENCODING))

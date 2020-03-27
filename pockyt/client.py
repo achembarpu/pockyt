@@ -2,12 +2,13 @@ from __future__ import absolute_import, print_function, unicode_literals, with_s
 
 import sys
 import time
+from os.path import join
 
 import parse
 
 from .api import API
-from .compat import prompt, resolve_path
-from .wrapper import Browser, Network, save_webpage
+from .compat import prompt
+from .wrapper import Browser, FileSystem, Network
 
 
 class Client(object):
@@ -35,13 +36,11 @@ class Client(object):
                                               self._payload)
 
     def _output_to_file(self):
-        with open(resolve_path(self._args.output), "w+") as outfile:
-            for info in self._output:
-                line = self._format_spec.format(**info)
-                try:
-                    outfile.write(line)
-                except UnicodeEncodeError:
-                    outfile.write(line.encode(API.ENCODING))
+        file_path = FileSystem.resolve_path(self._args.output)
+        print("Saving output file: {0}".format(file_path))
+        content = ''.join(
+            map(lambda info: self._format_spec.format(**info), self._output))
+        FileSystem.write_to_file(file_path, content)
 
     def _print_to_console(self):
         for info in self._output:
@@ -58,13 +57,20 @@ class Client(object):
         for info in self._output[1:]:
             # pace new tabs
             time.sleep(1)
+            print(self._format_spec.format(**info))
             Browser.open_new_tab(info["link"])
 
     def _save_to_archive(self):
-        archive_path = resolve_path(self._args.archive)
-        print("Saving offline copies: {0}".format(archive_path))
+        archive_path = FileSystem.resolve_path(self._args.archive)
+        FileSystem.ensure_dir((archive_path))
+
         for info in self._output[1:]:
-            print(info["link"])
+            print(self._format_spec.format(**info))
+            html = Network.get_html(info['link'])
+            title = FileSystem.get_safe_name(info['title'])
+            filename = '{0} - {1}.html'.format(info['id'], title)
+            filepath = join(archive_path, filename)
+            FileSystem.write_to_file(filepath, html)
 
     def _get_console_input(self):
         print("Enter data: {0}".format(self._args.format.strip()))
@@ -225,20 +231,15 @@ class Client(object):
         if self._args.do == "get":
             self._get()
 
-            if self._args.archive:
-                if save_webpage is None:
-                    raise RuntimeError("`pywebcopy` is not installed!")
-                self._save_to_archive()
-                return
-
-            # print output
-            self._print_to_console()
-
             # redirect output
-            if self._args.output == "browser":
+            if self._args.archive:
+                self._save_to_archive()
+            elif self._args.output == "browser":
                 self._open_in_browser()
             elif self._args.output:
                 self._output_to_file()
+            else:
+                self._print_to_console()
 
         else:
             if self._args.input == "console":
