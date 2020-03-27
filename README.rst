@@ -35,14 +35,9 @@ Installation
 
 **pockyt** supports Python 2.7+ & 3.4+ on Windows, macOS, & GNU/Linux platforms.
 
-1. standard install: ``pip install -U pockyt``
-2. extra features: ``pip install -U pockyt[archive]`` :
-
-    * `archive`: Save offline versions of webpages
-
-3. ``pockyt reg``
-4. Follow the prompts to connect your Pocket account to pockyt.
-5. Refer the Documentation and Examples for usage info and ideas.
+1. Install pockyt: ``pip install -U pockyt``
+2. Connect Pocket account: ``pockyt reg``
+4. Refer the Examples & Documentation below.
 
 Examples
 --------
@@ -76,6 +71,12 @@ Examples
     .. code::
 
         pockyt get -v 1 | pockyt mod -a 1 -i redirect
+
+* Get all favorited items and save offline copies of them.
+
+    .. code::
+
+        pockyt get -v 1 -a ./pocket
 
 Contribute
 ----------

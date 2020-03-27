@@ -17,8 +17,3 @@ try:
     from urllib.request import urlopen, Request
 except ImportError:  # py2
     from urllib2 import urlopen, Request
-
-try:  # [archive]
-    from pywebcopy import save_webpage
-except ImportError:
-    save_webpage = None

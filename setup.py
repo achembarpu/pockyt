@@ -14,7 +14,7 @@ for [supported_major, supported_minor] in supported_versions:
 
 name = "pockyt"
 version = "1.3.1"
-motto = "automate and manage your pocket collection"
+motto = "A simple yet powerful commandline client for your Pocket collection."
 author = "Arvind Chembarpu"
 email = "achembarpu@gmail.com"
 github = "https://github.com/arvindch/%s" % (name)
@@ -39,9 +39,6 @@ setup(
     install_requires=[
         "parse==1.15.0",
     ],
-    extras_require={
-        "archive": ["pywebcopy==6.2.0"],
-    },
     download_url="%s/tarball/%s" % (github, version),
     keywords=["pocket", "commandline", "automation"],
     classifiers=[
