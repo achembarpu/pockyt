@@ -12,7 +12,7 @@ for [supported_major, supported_minor] in supported_versions:
         sys.exit(1)
 
 name = "pockyt"
-version = "1.4.1"
+version = "1.4.2"
 license = "GPLv3+"
 motto = "A simple, yet powerful, commandline client for your Pocket collection."
 author = "Arvind Chembarpu"
