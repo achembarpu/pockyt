@@ -35,8 +35,8 @@ Installation
 
 **pockyt** supports Python 2.7+ & 3.4+ on Windows, macOS, & GNU/Linux platforms.
 
-1. Install pockyt: `pip install -U pockyt`
-2. Connect Pocket account: `pockyt reg`
+1. Install pockyt: :code:`pip install -U pockyt`
+2. Connect Pocket account: :code:`pockyt reg`
 3. Refer the Examples & Documentation below.
 
 Examples
