@@ -27,33 +27,34 @@ def print_bug_report(message=""):
 
     separator = "\n" + ("-" * 69) + "\n"
 
-    python_version = str(sys.version_info[:3])
-    arguments = "\n".join(arg for arg in sys.argv[1:])
+    error_message = message or traceback.format_exc().strip()
+    python_version = str(sys.version)
+    command = " ".join(sys.argv[1:])
 
     try:
-        import pip
+        import pkg_resources
     except ImportError:
-        packages = "`pip` is not installed !"
+        packages_message = "`pkg_resources` is not installed!"
     else:
-        packages = "\n".join(
+        packages_message = "\n".join(
             "{0} - {1}".format(package.key, package.version)
-            for package in pip.get_installed_distributions()
+            for package in pkg_resources.working_set
         )
 
     print(
-        "```{0}Bug Report :\n"
-        "`pockyt` has encountered an error ! "
+        "{0}Bug Report :\n"
+        "`pockyt` has encountered an error! "
         "Please submit this bug report at \n` {1} `.{0}"
-        "Python Version : {2}{0}"
-        "Installed Packages :\n{3}{0}"
-        "Runtime Arguments :\n{4}{0}"
-        "Error Message :\n{5}{0}```".format(
+        "Python Version:\n{2}{0}"
+        "Installed Packages:\n{3}{0}"
+        "Commmand:\n{4}{0}"
+        "Error Message:\n{5}{0}".format(
             separator,
             API.ISSUE_URL,
             python_version,
-            packages,
-            arguments,
-            message or traceback.format_exc().strip(),
+            packages_message,
+            command,
+            error_message,
         )
     )
 
