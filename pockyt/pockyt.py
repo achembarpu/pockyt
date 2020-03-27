@@ -28,12 +28,14 @@ class Pockyt(object):
         # subcommand parsers
         subparsers = self.parser.add_subparsers(dest="do")
 
+        subparsers.add_parser("help", help="show pockyt usage help")
+
         # connect account
         subparsers.add_parser("reg", help="connect a pocket account")
 
         # get items from collection
         get_parser = subparsers.add_parser(
-            "get", help="get pocket collection, with useful item_info",
+            "get", help="get pocket collection, with useful item info",
         )
         get_parser.add_argument(
             "-c",
@@ -131,7 +133,7 @@ class Pockyt(object):
 
         # modify items in collection
         mod_parser = subparsers.add_parser(
-            "mod", help="modify pocket collection, using item_ids",
+            "mod", help="modify pocket collection, using item ids",
         )
         mod_parser.add_argument(
             "-f",
@@ -172,7 +174,7 @@ class Pockyt(object):
         )
 
     def run(self):
-        if not self._args.do:
+        if not self._args.do or self._args.do == "help":
             self.parser.print_help()
             return
 
