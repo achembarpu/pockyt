@@ -7,13 +7,13 @@ supported_versions = [(2, 7), (3, 4)]
 [major, minor] = sys.version_info[0:2]
 for [supported_major, supported_minor] in supported_versions:
     if major == supported_major and minor < supported_minor:
-        print("Python [%s] is unsupported!\n"
-              "Please use Python 2.7+ or 3.4+" %
+        print("Python [%s] is unsupported!\nPlease use Python 2.7+ or 3.4+" %
               (".".join(str(i) for i in sys.version_info[0:3])))
         sys.exit(1)
 
 name = "pockyt"
-version = "1.4.0"
+version = "1.4.1"
+license = "GPLv3+"
 motto = "A simple, yet powerful, commandline client for your Pocket collection."
 author = "Arvind Chembarpu"
 email = "achembarpu@gmail.com"
@@ -22,8 +22,10 @@ github = "https://github.com/arvindch/%s" % (name)
 try:
     with open("README.rst") as f:
         description = f.read()
+        description_type = "text/x-rst"
 except:
     description = ""
+    description_type = ""
 
 setup(
     name=name,
@@ -31,14 +33,12 @@ setup(
     version=version,
     description=motto,
     long_description=description,
-    long_description_content_type="text/x-rst",
+    long_description_content_type=description_type,
     author=author,
     author_email=email,
     url=github,
-    license="GPLv3+",
-    install_requires=[
-        "parse==1.15.0",
-    ],
+    license=license,
+    install_requires=["parse==1.15.0"],
     download_url="%s/tarball/%s" % (github, version),
     keywords=["pocket", "commandline", "automation"],
     classifiers=[
