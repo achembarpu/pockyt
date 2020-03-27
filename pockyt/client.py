@@ -37,40 +37,29 @@ class Client(object):
 
     def _output_to_file(self):
         file_path = FileSystem.resolve_path(self._args.output)
-        print("Saving output file: {0}".format(file_path))
         content = ''.join(
             map(lambda info: self._format_spec.format(**info), self._output))
         FileSystem.write_to_file(file_path, content)
 
-    def _print_to_console(self):
-        for info in self._output:
-            line = self._format_spec.format(**info)
-            try:
-                print(line, end="")
-            except UnicodeEncodeError:
-                print(line.encode(API.ENCODING), end="")
+    def _print_to_console(self, info):
+        line = self._format_spec.format(**info)
+        try:
+            print(line, end="")
+        except UnicodeEncodeError:
+            print(line.encode(API.ENCODING), end="")
 
-    def _open_in_browser(self):
-        # open a new window
-        Browser.open_new_window(self._output[0]["link"])
+    def _open_in_browser(self, info):
+        time.sleep(1)
+        Browser.open_new_tab(info["link"])
 
-        for info in self._output[1:]:
-            # pace new tabs
-            time.sleep(1)
-            print(self._format_spec.format(**info))
-            Browser.open_new_tab(info["link"])
-
-    def _save_to_archive(self):
+    def _save_to_archive(self, info):
         archive_path = FileSystem.resolve_path(self._args.archive)
         FileSystem.ensure_dir((archive_path))
-
-        for info in self._output[1:]:
-            print(self._format_spec.format(**info))
-            html = Network.get_html(info['link'])
-            title = FileSystem.get_safe_name(info['title'])
-            filename = '{0} - {1}.html'.format(info['id'], title)
-            filepath = join(archive_path, filename)
-            FileSystem.write_to_file(filepath, html)
+        title = FileSystem.get_safe_name(info['title'])
+        filename = '{0} - {1}.html'.format(info['id'], title)
+        filepath = join(archive_path, filename)
+        html = Network.get_html(info['link'])
+        FileSystem.write_to_file(filepath, html)
 
     def _get_console_input(self):
         print("Enter data: {0}".format(self._args.format.strip()))
@@ -231,15 +220,15 @@ class Client(object):
         if self._args.do == "get":
             self._get()
 
-            # redirect output
-            if self._args.archive:
-                self._save_to_archive()
-            elif self._args.output == "browser":
-                self._open_in_browser()
-            elif self._args.output:
-                self._output_to_file()
+            for info in self._output:
+                self._print_to_console(info)
+                if self._args.archive:
+                    self._save_to_archive(info)
+                elif self._args.output == "browser":
+                    self._open_in_browser(info)
             else:
-                self._print_to_console()
+                if self._args.output:
+                    self._output_to_file()
 
         else:
             if self._args.input == "console":
