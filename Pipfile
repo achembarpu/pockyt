@@ -8,7 +8,8 @@ black = "*"
 
 [packages]
 pockyt = {editable = true,path = "."}
-parse = "==1.6.6"
+parse = "==1.15.0"
+pywebcopy = "==6.2.0"
 
 [requires]
 python_version = "3.7"

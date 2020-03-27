@@ -40,7 +40,8 @@ setup(
     author_email=email,
     url=github,
     license="GPLv3+",
-    install_requires=["parse>=1.6",],
+    install_requires=["parse==1.15.0",],
+    extras_require={"archive": ["pywebcopy==6.2.0"],},
     download_url="%s/tarball/%s" % (github, version),
     keywords=["pocket", "commandline", "automation"],
     classifiers=[
