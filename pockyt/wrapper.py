@@ -2,10 +2,12 @@ from __future__ import absolute_import, print_function, unicode_literals, with_s
 
 import json
 import os
+import re
 import sys
 import traceback
 import webbrowser
 from collections import OrderedDict
+from os.path import join, realpath
 
 from .api import API
 from .compat import urlparse, urlopen, Request, save_webpage
@@ -154,3 +156,27 @@ class Browser(object):
     @classmethod
     def open_new_tab(cls, link):
         cls.open(link, new=2)
+
+
+class FileSystem(object):
+    """
+    Safe filesystem handling
+    """
+    CLEAN_CHARS = re.compile('[^\w\-_\. ]')
+
+    @classmethod
+    def resolve_path(cls, path):
+        return realpath(path)
+
+    @classmethod
+    def get_safe_path(cls, path, name):
+        return join(path, cls.CLEAN_CHARS.sub('_', name))
+
+    @classmethod
+    def write_to_file(cls, file, lines):
+        with open(realpath(file), "w+") as outfile:
+            for line in lines:
+                try:
+                    outfile.write(line)
+                except UnicodeEncodeError:
+                    outfile.write(line.encode(API.ENCODING))

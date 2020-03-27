@@ -22,5 +22,3 @@ try:  # [archive]
     from pywebcopy import save_webpage
 except ImportError:
     save_webpage = None
-
-from os.path import realpath as resolve_path
