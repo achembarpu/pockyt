@@ -14,7 +14,7 @@ Links
 -----
 
 * `PyPi package <https://pypi.python.org/pypi/pockyt>`_
-* `GitHub repository <https://github.com/arvindch/pockyt>`_
+* `GitHub repository <https://github.com/achembarpu/pockyt>`_
 
 About
 -----
