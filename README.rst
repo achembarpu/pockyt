@@ -83,7 +83,7 @@ Contribute
 
 Feel free to contribute features, bugfixes, improvements, and usage ideas.
 
-1. `Fork <https://github.com/arvindch/pockyt/fork>`_ pockyt.
+1. `Fork <https://github.com/achembarpu/pockyt/fork>`_ pockyt.
 
 2. Work on the source code.
 
@@ -100,12 +100,12 @@ Feel free to contribute features, bugfixes, improvements, and usage ideas.
         git commit -am 'commit msg'
         git push origin new-feature
 
-3. Submit a `pull request <https://github.com/arvindch/pockyt/compare>`_.
+3. Submit a `pull request <https://github.com/achembarpu/pockyt/compare>`_.
 
 License
 -------
 
-This project uses the `GNU GPLv3 License <https://github.com/arvindch/pockyt/blob/master/LICENSE.txt>`_.
+This project uses the `GNU GPLv3 License <https://github.com/achembarpu/pockyt/blob/master/LICENSE.txt>`_.
 
 Documentation
 -------------
