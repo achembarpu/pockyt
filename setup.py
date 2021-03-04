@@ -17,7 +17,7 @@ license = "GPLv3+"
 motto = "A simple, yet powerful, commandline client for your Pocket collection."
 author = "Arvind Chembarpu"
 email = "achembarpu@gmail.com"
-github = "https://github.com/arvindch/%s" % (name)
+github = "https://github.com/achembarpu/%s" % (name)
 
 try:
     with open("README.rst") as f:
