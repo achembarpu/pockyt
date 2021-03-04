@@ -121,6 +121,12 @@ class Pockyt(object):
             help="save offline copies : <path> : path/to/archive/folder",
         )
 
+        get_parser.add_argument(
+            "--since",
+            metavar="<YYYY-MM-DD>",
+            help="only return items modified since : <YYYY-MM-DD>",
+        )
+
         # add items to collection
         put_parser = subparsers.add_parser(
             "put",

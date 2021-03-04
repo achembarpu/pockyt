@@ -2,6 +2,7 @@ from __future__ import absolute_import, print_function, unicode_literals, with_s
 
 import sys
 import time
+from datetime import datetime
 from os.path import join
 
 import parse
@@ -145,6 +146,10 @@ class Client(object):
 
         if self._args.domain:
             payload["domain"] = self._args.domain
+
+        if self._args.since:
+            payload["since"] = datetime.strptime(self._args.since,
+                                                 "%Y-%m-%d").timestamp()
 
         self._payload = payload
         self._api_endpoint = API.RETRIEVE_URL
