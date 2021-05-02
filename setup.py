@@ -12,7 +12,7 @@ for [supported_major, supported_minor] in supported_versions:
         sys.exit(1)
 
 name = "pockyt"
-version = "1.4.5"
+version = "1.4.6"
 license = "GPLv3+"
 motto = "A simple, yet powerful, commandline client for your Pocket collection."
 author = "Arvind Chembarpu"
@@ -38,7 +38,7 @@ setup(
     author_email=email,
     url=github,
     license=license,
-    install_requires=["parse==1.15.0"],
+    install_requires=["parse>=1.19.0"],
     download_url="%s/tarball/%s" % (github, version),
     keywords=["pocket", "commandline", "automation"],
     classifiers=[
