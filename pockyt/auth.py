@@ -79,8 +79,9 @@ class Authenticator(object):
         prompt("Step 1:\nCreate an application, via this link :\n` {0} `\n"
                "Press Enter when done...".format(create_link))
 
-        self._consumer_key = prompt(
-            "Step 2:\nEnter your Consumer Key: ").strip()
+        while not self._consumer_key:
+            self._consumer_key = prompt(
+                "Step 2:\nEnter your Consumer Key: ").strip()
 
         self._obtain_request_token()
 
