@@ -74,7 +74,8 @@ class Authenticator(object):
 
         create_link = API.APP_CREATE_URL
 
-        Browser.open_new_tab(create_link)
+        if not self._args.no_browser:
+            Browser.open_new_tab(create_link)
 
         prompt("Step 1:\nCreate an application, via this link :\n` {0} `\n"
                "Press Enter when done...".format(create_link))
@@ -87,7 +88,8 @@ class Authenticator(object):
 
         auth_link = API.get_auth_user_url(self._request_token)
 
-        Browser.open_new_tab(auth_link)
+        if not self._args.no_browser:
+            Browser.open_new_tab(auth_link)
 
         prompt("Step 3:\nConnect an account, via this link :\n` {0} `\n"
                "Press Enter when done...".format(auth_link))

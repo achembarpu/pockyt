@@ -30,7 +30,13 @@ class Pockyt(object):
         subparsers.add_parser("help", help="show pockyt usage help")
 
         # connect account
-        subparsers.add_parser("reg", help="connect a pocket account")
+        reg_parser = subparsers.add_parser("reg",
+                                           help="connect a pocket account")
+        reg_parser.add_argument(
+            "--no-browser",
+            action='store_true',
+            help="use without browser i.e. print to console",
+        )
 
         # get items from collection
         get_parser = subparsers.add_parser(
