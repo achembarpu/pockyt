@@ -77,12 +77,12 @@ class Authenticator(object):
         if not self._args.no_browser:
             Browser.open_new_tab(create_link)
 
-        prompt("Step 1:\nCreate an application, via this link :\n` {0} `\n"
+        prompt("Step 1: Create an application, via this link :\n` {0} `\n"
                "Press Enter when done...".format(create_link))
 
         while not self._consumer_key:
             self._consumer_key = prompt(
-                "Step 2:\nEnter your Consumer Key: ").strip()
+                "Step 2: Enter your Consumer Key:\n").strip()
 
         self._obtain_request_token()
 
@@ -91,7 +91,7 @@ class Authenticator(object):
         if not self._args.no_browser:
             Browser.open_new_tab(auth_link)
 
-        prompt("Step 3:\nConnect an account, via this link :\n` {0} `\n"
+        prompt("Step 3: Connect an account, via this link :\n` {0} `\n"
                "Press Enter when done...".format(auth_link))
 
         self._obtain_access_token()
