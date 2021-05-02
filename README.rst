@@ -111,17 +111,23 @@ Documentation
 -------------
 
 **pockyt help/-h/--help** :
+  help
+    show pockyt usage help
+  reg
+    connect a pocket account
+  get
+    get pocket collection, with useful item info
+  put
+    add to pocket collection, using links
+  mod
+    modify pocket collection, using item ids
 
-    help
-        show pockyt usage help
-    reg
-        connect a pocket account
-    get
-        get pocket collection, with useful item info
-    put
-        add to pocket collection, using links
-    mod
-        modify pocket collection, using item ids
+**pockyt reg -h** :
+
+  -h, --help
+                        show this help message and exit
+  --no-browser
+                        use without browser i.e. print to console
 
 **pockyt get -h** :
 
@@ -154,6 +160,9 @@ Documentation
                         filename]}
   -a <path>, --archive <path>
                         save offline copies : <path> : path/to/archive/folder
+
+  --since <YYYY-MM-DD>
+                        only return items modified since : <YYYY-MM-DD>
 
 **pockyt put -h** :
 
