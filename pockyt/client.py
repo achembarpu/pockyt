@@ -195,7 +195,7 @@ class Client(object):
             if self._args.archive == 1:
                 action = "archive"
             else:
-                action = "readd"
+                action = "readd"  # i.e. re-add
         elif self._args.favorite != -1:
             if self._args.favorite == 1:
                 action = "favorite"
