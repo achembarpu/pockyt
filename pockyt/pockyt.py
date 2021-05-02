@@ -34,7 +34,7 @@ class Pockyt(object):
                                            help="connect a pocket account")
         reg_parser.add_argument(
             "--no-browser",
-            action='store_true',
+            action="store_true",
             help="use without browser i.e. print to console",
         )
 

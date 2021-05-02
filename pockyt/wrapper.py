@@ -119,8 +119,10 @@ class Network(object):
     """
     Safe POST Request, with error-handling
     """
-    USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 " \
-        + "(KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"  # Chrome UA
+
+    USER_AGENT = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 " +
+                  "(KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
+                  )  # Chrome UA
 
     @classmethod
     def post_request(cls, link, payload):
@@ -128,7 +130,7 @@ class Network(object):
         headers = {
             "Content-Type": API.CONTENT_TYPE,
             "Content-Length": len(request_data),
-            'User-Agent': cls.USER_AGENT
+            "User-Agent": cls.USER_AGENT,
         }
         request = Request(link, data=request_data, headers=headers)
         response = Response(urlopen(request))
@@ -144,7 +146,7 @@ class Network(object):
 
     @classmethod
     def get_html(cls, link):
-        headers = {'User-Agent': cls.USER_AGENT}
+        headers = {"User-Agent": cls.USER_AGENT}
         response = Response(urlopen(Request(link, headers=headers)))
         return response.get_text()
 
@@ -175,11 +177,12 @@ class FileSystem(object):
     """
     Safe filesystem handling
     """
-    CLEAN_CHARS = re.compile('[^\w\-_\. ]')
+
+    CLEAN_CHARS = re.compile("[^\w\-_\. ]")
 
     @classmethod
     def get_safe_name(cls, name):
-        return cls.CLEAN_CHARS.sub('_', name)
+        return cls.CLEAN_CHARS.sub("_", name)
 
     @staticmethod
     def resolve_path(path):

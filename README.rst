@@ -91,11 +91,18 @@ Feel free to contribute features, bugfixes, improvements, and usage ideas.
 
         git clone git@github.com:<username>/pockyt.git
         cd pockyt
+
+        # runtime dependencies
         pip install -e .
-        git checkout -b new-feature
-        ...
+        # devel dependencies
+        pip install -r requirements.txt
+
         # do stuff
-        ...
+        git checkout -b new-feature
+
+        # format files
+        yapf -i -r .
+
         git add .
         git commit -am 'commit msg'
         git push origin new-feature
@@ -111,6 +118,7 @@ Documentation
 -------------
 
 **pockyt help/-h/--help** :
+
   help
     show pockyt usage help
   reg
@@ -160,7 +168,6 @@ Documentation
                         filename]}
   -a <path>, --archive <path>
                         save offline copies : <path> : path/to/archive/folder
-
   --since <YYYY-MM-DD>
                         only return items modified since : <YYYY-MM-DD>
 

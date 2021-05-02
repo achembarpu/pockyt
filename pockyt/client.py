@@ -38,7 +38,7 @@ class Client(object):
 
     def _output_to_file(self):
         file_path = FileSystem.resolve_path(self._args.output)
-        content = ''.join(
+        content = "".join(
             map(lambda info: self._format_spec.format(**info), self._output))
         FileSystem.write_to_file(file_path, content)
 
@@ -56,10 +56,10 @@ class Client(object):
     def _save_to_archive(self, info):
         archive_path = FileSystem.resolve_path(self._args.archive)
         FileSystem.ensure_dir((archive_path))
-        title = FileSystem.get_safe_name(info['title'])
-        filename = '{0} - {1}.html'.format(info['id'], title)
+        title = FileSystem.get_safe_name(info["title"])
+        filename = "{0} - {1}.html".format(info["id"], title)
         filepath = join(archive_path, filename)
-        html = Network.get_html(info['link'])
+        html = Network.get_html(info["link"])
         FileSystem.write_to_file(filepath, html)
 
     def _get_console_input(self):
